@@ -1,0 +1,1 @@
+MyComponent created using createComponent()
