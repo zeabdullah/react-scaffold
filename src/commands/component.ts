@@ -16,10 +16,10 @@ export default class Component extends Command {
   private async createComponent(name: string, config: {destination: string}) {
     const dest = config.destination
     if (!fs.pathExistsSync(dest)) fs.mkdir(dest)
-    
 
     await fs.mkdir(`${dest}/${name}`)
     await fs.writeFile(`${dest}/${name}/${name}.js`, `${name} created using createComponent()`)
+    this.log(`✔ Created ${name} at ${dest}/${name}`)
   }
 
   public async run(): Promise<void> {

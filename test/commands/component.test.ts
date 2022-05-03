@@ -17,10 +17,10 @@ describe('component', () => {
     expect(fs.pathExistsSync('src/components/MyComponent/MyComponent.ts')).to.be.true
   })
 
-// test
-//   .stdout()
-//   .command(["component", "ComponentName", "--dest", "testSrc/components"])
-//   .it("runs hello --name jeff", (ctx) => {
-//     expect(ctx.stdout).to.contain("hello jeff");
-//   });
+  test
+  .stdout()
+  .command(['component', 'ComponentName', '--dest', 'testSrc/components'])
+  .it('should create a component named ComponentName.js in testSrc/components', ctx => {
+    expect(ctx.stdout).to.contain('hello jeff')
+  })
 })
