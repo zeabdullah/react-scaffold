@@ -4,8 +4,6 @@ oclif-hello-world
 oclif example Hello World CLI
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![Version](https://img.shields.io/npm/v/oclif-hello-world.svg)](https://npmjs.org/package/oclif-hello-world)
-[![CircleCI](https://circleci.com/gh/oclif/hello-world/tree/main.svg?style=shield)](https://circleci.com/gh/oclif/hello-world/tree/main)
 [![Downloads/week](https://img.shields.io/npm/dw/oclif-hello-world.svg)](https://npmjs.org/package/oclif-hello-world)
 [![License](https://img.shields.io/npm/l/oclif-hello-world.svg)](https://github.com/oclif/hello-world/blob/main/package.json)
 
@@ -20,7 +18,7 @@ $ npm install -g react-scaffold
 $ react-scaffold COMMAND
 running command...
 $ react-scaffold (--version)
-react-scaffold/0.0.0 win32-x64 node-v16.13.1
+react-scaffold/0.1.0 win32-x64 node-v16.13.1
 $ react-scaffold --help [COMMAND]
 USAGE
   $ react-scaffold COMMAND
@@ -64,7 +62,7 @@ EXAMPLES
   hello friend from oclif! (./src/commands/hello/index.ts)
 ```
 
-_See code: [dist/commands/hello/index.ts](https://github.com/AbdullahZeidan/react-scaffold/blob/v0.0.0/dist/commands/hello/index.ts)_
+_See code: [dist/commands/hello/index.ts](https://github.com/AbdullahZeidan/react-scaffold/blob/v0.1.0/dist/commands/hello/index.ts)_
 
 ## `react-scaffold hello world`
 
@@ -100,7 +98,7 @@ DESCRIPTION
   Display help for react-scaffold.
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.1.10/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.1.12/src/commands/help.ts)_
 
 ## `react-scaffold plugins`
 
