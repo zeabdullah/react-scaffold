@@ -4,32 +4,35 @@ import * as fs from 'fs-extra'
 export default class Component extends Command {
   static description = 'Scaffold a React component';
 
-  static examples = ['<%= config.bin %> <%= command.id %>'];
+  // static examples = ['<%= config.bin %> <%= command.id %> '];
 
   static flags = {
     dest: Flags.string({char: 'd', description: 'Destination folder', required: false, default: 'src/components'}),
     type: Flags.string({char: 't', description: 'File type (ts|js)', required: false, default: 'js'}),
   };
 
-  static args = [{name: 'componentName'}];
+  static args = [{name: 'ComponentName'}];
 
-  private async createComponent(name: string, config: {destination: string}) {
+  private async createComponent(compName: string, config: {destination: string}) {
     const dest = config.destination
-    if (!fs.pathExistsSync(dest)) fs.mkdir(dest)
 
-    await fs.mkdir(`${dest}/${name}`)
-    await fs.writeFile(`${dest}/${name}/${name}.js`, `${name} created using createComponent()`)
-    this.log(`✔ Created ${name} at ${dest}/${name}`)
+    const jsContent = `export default function ${compName}() {
+  return <div>${compName}</div>
+}`
+
+    await fs.mkdirp(`${dest}/${compName}`)
+    await fs.writeFile(`${dest}/${compName}/${compName}.js`, jsContent)
+
+    this.log(`✔ Created ${compName} at ${dest}/${compName}`)
   }
 
   public async run(): Promise<void> {
     const {args, flags} = await this.parse(Component)
 
-    if (args.componentName) {
+    if (args.ComponentName) {
       const dest = flags.dest || 'src/components'
-      this.createComponent(args.componentName, {
-        destination: dest,
-      })
+
+      await this.createComponent(args.ComponentName, {destination: dest})
     } else {
       this.log('Missing Argument: <ComponentName>')
     }
