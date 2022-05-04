@@ -1,5 +1,7 @@
-oclif-hello-world
+react-scaffold
 =================
+
+_Please ignore the README for now._
 
 oclif example Hello World CLI
 
