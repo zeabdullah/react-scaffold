@@ -14,7 +14,7 @@ jobs:
     strategy:
       matrix:
         node-version: [14.x, 16.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        # These are the versions supported by pnpm v7.0.0
 
     steps:
     - uses: actions/checkout@v2
@@ -29,6 +29,6 @@ jobs:
     - name: Install dependencies
       run: pnpm install
     - name: Build app
-      run: pnpm build --if-present
+      run: pnpm build
     - name: Run tests
       run: pnpm test
