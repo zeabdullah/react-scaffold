@@ -1,14 +1,15 @@
 import {expect, test} from '@oclif/test'
 import * as fs from 'fs-extra'
 
-const TEST_DIR = 'mock/src'
-
 describe('component', () => {
-  before(() => {
+  const TEST_DIR = 'mock/src'
+
+  beforeEach(() => {
+    // Delete the following test folders, if present
     fs.remove('mock').catch()
     fs.remove('src/components').catch()
   })
-  after(() => {
+  afterEach(() => {
     fs.remove('mock').catch()
     fs.remove('src/components').catch()
   })
@@ -25,14 +26,14 @@ describe('component', () => {
   .command(['component', 'MyComponent'])
   .it('should create a component named MyComponent.js in src/components by default', async _ctx => {
     const jsFilePath = 'src/components/MyComponent/MyComponent.js'
+    const jsFilePathExists = await fs.pathExists(jsFilePath)
+    expect(jsFilePathExists).to.be.true
 
-    expect(await fs.pathExists(jsFilePath)).to.be.true
-
-    const expectedFileContent = `export default function MyComponent() {
+    const jsFileContent = await fs.readFile(jsFilePath, 'utf-8')
+    const expectedFileContent =
+`export default function MyComponent() {
   return <div>MyComponent</div>
 }`
-    const jsFileContent = await fs.readFile(jsFilePath, 'utf-8')
-
     expect(jsFileContent).to.eql(expectedFileContent)
   })
 

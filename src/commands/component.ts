@@ -30,9 +30,8 @@ export default class Component extends Command {
     const {args, flags} = await this.parse(Component)
 
     if (args.ComponentName) {
-      const dest = flags.dest || 'src/components'
-
-      await this.createComponent(args.ComponentName, {destination: dest})
+      const destination = flags.dest || 'src/components'
+      await this.createComponent(args.ComponentName, {destination})
     } else {
       this.log('Missing Argument: <ComponentName>')
     }
