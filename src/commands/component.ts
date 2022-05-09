@@ -23,17 +23,28 @@ export default class Component extends Command {
     await fs.mkdirp(`${dest}/${compName}`)
     await fs.writeFile(`${dest}/${compName}/${compName}.js`, jsContent)
 
-    this.log(`✔ Created ${compName} at ${dest}/${compName}`)
+    this.log(`✅ Created ${compName} at ${dest}/${compName}`)
+  }
+
+  public isPascalCase(str: string): boolean {
+    const pascalCaseRegex = /^(?:[A-Z][a-z]+)+$/
+    return pascalCaseRegex.test(str)
   }
 
   public async run(): Promise<void> {
     const {args, flags} = await this.parse(Component)
 
-    if (args.ComponentName) {
-      const destination = flags.dest || 'src/components'
-      await this.createComponent(args.ComponentName, {destination})
-    } else {
+    if (!args.ComponentName) {
       this.log('Missing Argument: <ComponentName>')
+      return
     }
+
+    if (!this.isPascalCase(args.ComponentName)) {
+      this.log(`Invalid Argument: ${args.ComponentName} must be in PascalCase`)
+      return
+    }
+
+    const destination = flags.dest || 'src/components'
+    await this.createComponent(args.ComponentName, {destination})
   }
 }

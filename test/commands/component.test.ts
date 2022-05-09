@@ -5,7 +5,7 @@ describe('component', () => {
   const TEST_DIR = 'mock/src'
 
   beforeEach(() => {
-    // Delete the following test folders, if present
+    // Deletes the following test folders, if present
     fs.remove('mock').catch()
     fs.remove('src/components').catch()
   })
@@ -16,24 +16,16 @@ describe('component', () => {
 
   test
   .stdout()
-  .command(['component'])
-  .it('should expect a <ComponentName> argument', ctx => {
-    expect(ctx.stdout).to.contain('Missing Argument: <ComponentName>')
-  })
-
-  test
-  .stdout()
   .command(['component', 'MyComponent'])
-  .it('should create a component named MyComponent.js in src/components by default', async _ctx => {
+  .it('should create a component named MyComponent.js in src/components by default', async ctx => {
     const jsFilePath = 'src/components/MyComponent/MyComponent.js'
-    const jsFilePathExists = await fs.pathExists(jsFilePath)
-    expect(jsFilePathExists).to.be.true
 
     const jsFileContent = await fs.readFile(jsFilePath, 'utf-8')
     const expectedFileContent =
 `export default function MyComponent() {
   return <div>MyComponent</div>
 }`
+    expect(ctx.stdout).to.contain('✅ Created MyComponent at src/components/MyComponent')
     expect(jsFileContent).to.eql(expectedFileContent)
   })
 
@@ -46,5 +38,21 @@ describe('component', () => {
 
     expect(parentFolder).to.be.true
     expect(targetJsFile).to.be.true
+  })
+
+  test
+  .stdout()
+  .command(['component'])
+  .it('should expect a <ComponentName> argument', ctx => {
+    expect(ctx.stdout).to.contain('Missing Argument: <ComponentName>')
+    expect(ctx.stdout).to.not.contain('✅ Created')
+  })
+
+  test
+  .stdout()
+  .command(['component', 'componentName'])
+  .it('should expect <ComponentName> argument to be PascalCase', ctx => {
+    expect(ctx.stdout).to.contain('Invalid Argument: componentName must be in PascalCase')
+    expect(ctx.stdout).to.not.contain('✅ Created')
   })
 })
