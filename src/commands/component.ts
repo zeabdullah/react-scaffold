@@ -9,7 +9,7 @@ export default class Component extends Command {
 
   static flags = {
     dest: Flags.string({char: 'd', description: 'Destination folder', required: false, default: 'src/components'}),
-    type: Flags.string({char: 't', description: 'File type (ts|js)', required: false, default: 'js'}),
+    typescript: Flags.boolean({description: 'Create a TypeScript component', required: false}),
   };
 
   static args = [{name: 'componentName'}];
@@ -17,8 +17,9 @@ export default class Component extends Command {
   private async createComponent(config: {
     componentName: string,
     destination: string,
+    isTypescript?: boolean
   }): Promise<void> {
-    const {componentName, destination} = config
+    const {componentName, destination, isTypescript} = config
 
     const jsContent =
 `export default function ${componentName}() {
@@ -29,9 +30,9 @@ export default class Component extends Command {
 `.${componentName} {
 
 }`
-
+    const ext = isTypescript ? 'ts' : 'js'
     await fs.mkdirp(`${destination}/${componentName}`)
-    await fs.writeFile(`${destination}/${componentName}/${componentName}.js`, jsContent)
+    await fs.writeFile(`${destination}/${componentName}/${componentName}.${ext}`, jsContent)
     await fs.writeFile(`${destination}/${componentName}/${componentName}.css`, cssContent)
 
     this.log(`✅ Created ${componentName} at ${destination}/${componentName}`)
@@ -53,6 +54,7 @@ export default class Component extends Command {
     await this.createComponent({
       componentName: args.componentName,
       destination: flags.dest || 'src/components',
+      isTypescript: flags.typescript,
     })
   }
 }
