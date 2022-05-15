@@ -12,35 +12,40 @@ export default class Component extends Command {
     type: Flags.string({char: 't', description: 'File type (ts|js)', required: false, default: 'js'}),
   };
 
-  static args = [{name: 'ComponentName'}];
+  static args = [{name: 'componentName'}];
 
-  private async createComponent(compName: string, config: {destination: string}) {
-    const dest = config.destination
+  private async createComponent(config: {
+    componentName: string,
+    destination: string,
+  }): Promise<void> {
+    const {componentName, destination} = config
 
-    const jsContent = `export default function ${compName}() {
-  return <div>${compName}</div>
+    const jsContent = `export default function ${componentName}() {
+  return <div>${componentName}</div>
 }`
 
-    await fs.mkdirp(`${dest}/${compName}`)
-    await fs.writeFile(`${dest}/${compName}/${compName}.js`, jsContent)
+    await fs.mkdirp(`${destination}/${componentName}`)
+    await fs.writeFile(`${destination}/${componentName}/${componentName}.js`, jsContent)
 
-    this.log(`✅ Created ${compName} at ${dest}/${compName}`)
+    this.log(`✅ Created ${componentName} at ${destination}/${componentName}`)
   }
 
   public async run(): Promise<void> {
     const {args, flags} = await this.parse(Component)
 
-    if (!args.ComponentName) {
+    if (!args.componentName) {
       this.log('Missing Argument: <ComponentName>')
       return
     }
 
-    if (!isPascalCase(args.ComponentName)) {
-      this.log(`Invalid Argument: ${args.ComponentName} must be in PascalCase`)
+    if (!isPascalCase(args.componentName)) {
+      this.log(`Invalid Argument: ${args.componentName} must be in PascalCase`)
       return
     }
 
-    const destination = flags.dest || 'src/components'
-    await this.createComponent(args.ComponentName, {destination})
+    await this.createComponent({
+      componentName: args.componentName,
+      destination: flags.dest || 'src/components',
+    })
   }
 }
