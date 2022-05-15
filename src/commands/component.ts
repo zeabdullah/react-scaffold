@@ -1,5 +1,6 @@
 import {Command, Flags} from '@oclif/core'
 import * as fs from 'fs-extra'
+import {isPascalCase} from '../helpers'
 
 export default class Component extends Command {
   static description = 'Scaffold a React component';
@@ -26,11 +27,6 @@ export default class Component extends Command {
     this.log(`✅ Created ${compName} at ${dest}/${compName}`)
   }
 
-  public isPascalCase(str: string): boolean {
-    const pascalCaseRegex = /^(?:[A-Z][a-z]+)+$/
-    return pascalCaseRegex.test(str)
-  }
-
   public async run(): Promise<void> {
     const {args, flags} = await this.parse(Component)
 
@@ -39,7 +35,7 @@ export default class Component extends Command {
       return
     }
 
-    if (!this.isPascalCase(args.ComponentName)) {
+    if (!isPascalCase(args.ComponentName)) {
       this.log(`Invalid Argument: ${args.ComponentName} must be in PascalCase`)
       return
     }
