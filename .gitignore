@@ -11,3 +11,8 @@ oclif.manifest.json
 # Used in some unit tests
 src/components/
 mock/
+
+# IDEs
+.idea/*
+.vscode/*
+!.vscode/settings.json
