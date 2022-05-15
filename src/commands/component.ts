@@ -1,5 +1,6 @@
 import {Command, Flags} from '@oclif/core'
 import * as fs from 'fs-extra'
+import * as templates from '../templates'
 import {isPascalCase} from '../helpers'
 
 export default class Component extends Command {
@@ -21,19 +22,14 @@ export default class Component extends Command {
   }): Promise<void> {
     const {componentName, destination, isTypescript} = config
 
-    const jsContent =
-`export default function ${componentName}() {
-  return <div>${componentName}</div>
-}`
+    const jsContent = templates.createJsTemplate(componentName)
+    const tsContent = templates.createTsTemplate(componentName)
+    const cssContent = templates.createCssTemplate(componentName)
 
-    const cssContent =
-`.${componentName} {
-
-}`
     const ext = isTypescript ? 'ts' : 'js'
     await fs.mkdirp(`${destination}/${componentName}`)
-    await fs.writeFile(`${destination}/${componentName}/${componentName}.${ext}`, jsContent)
-    await fs.writeFile(`${destination}/${componentName}/${componentName}.css`, cssContent)
+    await fs.writeFile(`${destination}/${componentName}/${componentName}.${ext}`, isTypescript ? tsContent : jsContent)
+    await fs.writeFile(`${destination}/${componentName}/${componentName}.module.css`, cssContent)
 
     this.log(`✅ Created ${componentName} at ${destination}/${componentName}`)
   }

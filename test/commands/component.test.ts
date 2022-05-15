@@ -37,16 +37,18 @@ describe('react-scaffold component', () => {
     const componentPath = 'src/components/MyComponent'
 
     const jsFileContent = await fs.readFile(`${componentPath}/MyComponent.js`, 'utf-8')
-    const expectedJsFileContent =
-`export default function MyComponent() {
-  return <div>MyComponent</div>
-}`
+    const expectedJsFileContent = `import React from 'react';
+import styles from './MyComponent.module.css'
 
-    const cssFileContent = await fs.readFile(`${componentPath}/MyComponent.css`, 'utf-8')
-    const expectedCssFileContent =
-`.MyComponent {
+function MyComponent() {
+  return <div className={styles.MyComponent}>MyComponent</div>
+}
 
-}`
+export default MyComponent;
+`
+
+    const cssFileContent = await fs.readFile(`${componentPath}/MyComponent.module.css`, 'utf-8')
+    const expectedCssFileContent = '.MyComponent {}'
 
     expect(ctx.stdout).to.contain('✅ Created MyComponent at src/components/MyComponent')
     expect(ctx.stdout).to.not.contain('Will create a typescript component')
@@ -60,7 +62,7 @@ describe('react-scaffold component', () => {
   .it('should create a component named TestComponent in a given directory', async _ctx => {
     const parentFolder = await fs.pathExists(TEST_DIR)
     const targetJsFile = await fs.pathExists(`${TEST_DIR}/components/TestComponent/TestComponent.js`)
-    const targetCssFile = await fs.pathExists(`${TEST_DIR}/components/TestComponent/TestComponent.css`)
+    const targetCssFile = await fs.pathExists(`${TEST_DIR}/components/TestComponent/TestComponent.module.css`)
 
     expect(parentFolder).to.be.true
     expect(targetJsFile).to.be.true
@@ -73,13 +75,14 @@ describe('react-scaffold component', () => {
   .it('should create a typescript component if given the `--typescript` flag', async _ctx => {
     const parentFolder = await fs.pathExists(TEST_DIR)
     const targetTsFile = await fs.pathExists(`${TEST_DIR}/components/TestComponent/TestComponent.ts`)
-    const targetJsFile = await fs.pathExists(`${TEST_DIR}/components/TestComponent/TestComponent.js`)
-    const targetCssFile = await fs.pathExists(`${TEST_DIR}/components/TestComponent/TestComponent.css`)
+    const targetCssFile = await fs.pathExists(`${TEST_DIR}/components/TestComponent/TestComponent.module.css`)
 
     expect(parentFolder).to.be.true
     expect(targetTsFile).to.be.true
-    expect(targetJsFile).to.be.false
     expect(targetCssFile).to.be.true
+
+    const targetJsFile = await fs.pathExists(`${TEST_DIR}/components/TestComponent/TestComponent.js`)
+    expect(targetJsFile).to.be.false
   })
 
   test
