@@ -20,12 +20,19 @@ export default class Component extends Command {
   }): Promise<void> {
     const {componentName, destination} = config
 
-    const jsContent = `export default function ${componentName}() {
+    const jsContent =
+`export default function ${componentName}() {
   return <div>${componentName}</div>
+}`
+
+    const cssContent =
+`.${componentName} {
+
 }`
 
     await fs.mkdirp(`${destination}/${componentName}`)
     await fs.writeFile(`${destination}/${componentName}/${componentName}.js`, jsContent)
+    await fs.writeFile(`${destination}/${componentName}/${componentName}.css`, cssContent)
 
     this.log(`✅ Created ${componentName} at ${destination}/${componentName}`)
   }
