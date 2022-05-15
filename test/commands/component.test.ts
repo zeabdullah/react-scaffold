@@ -88,8 +88,14 @@ export default MyComponent;
   test
   .skip()
   .stdout()
-  .command(['component', 'TestComponent', '--dest', `${TEST_DIR}/components`, '--typescript'])
-  .it('should create a .scss stylesheet if given the `--sass` or `--scss` flag', async _ctx => {
-    // TODO: implementation
+  .command(['component', 'TestComponent', '--dest', `${TEST_DIR}/components`, '--style', 'scss'])
+  .it('should create a .scss stylesheet if the `--style` flag equals `scss`', async _ctx => {
+    const parentFolder = await fs.pathExists(TEST_DIR)
+    const targetJsFile = await fs.pathExists(`${TEST_DIR}/components/TestComponent/TestComponent.js`)
+    const targetCssFile = await fs.pathExists(`${TEST_DIR}/components/TestComponent/TestComponent.module.scss`)
+
+    expect(parentFolder).to.be.true
+    expect(targetJsFile).to.be.true
+    expect(targetCssFile).to.be.true // ! Assertion fails here
   })
 })

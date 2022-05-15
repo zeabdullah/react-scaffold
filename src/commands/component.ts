@@ -11,6 +11,12 @@ export default class Component extends Command {
   static flags = {
     dest: Flags.string({char: 'd', description: 'Destination folder', required: false, default: 'src/components'}),
     typescript: Flags.boolean({description: 'Create a TypeScript component', required: false}),
+    style: Flags.string({
+      description: 'Set which type of styling to use',
+      required: false,
+      default: 'css',
+      options: ['css', 'scss', 'tw'],
+    }),
   };
 
   static args = [{name: 'componentName'}];
