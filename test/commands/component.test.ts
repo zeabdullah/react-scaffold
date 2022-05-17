@@ -38,7 +38,7 @@ describe('react-scaffold component', () => {
 
     const jsFileContent = await fs.readFile(`${componentPath}/MyComponent.js`, 'utf-8')
     const expectedJsFileContent = `import React from 'react';
-import styles from './MyComponent.module.css'
+import styles from './MyComponent.module.css';
 
 function MyComponent() {
   return <div className={styles.MyComponent}>MyComponent</div>
@@ -72,30 +72,29 @@ export default MyComponent;
   test
   .stdout()
   .command(['component', 'TestComponent', '--dest', `${TEST_DIR}/components`, '--typescript'])
-  .it('should create a typescript component if given the `--typescript` flag', async _ctx => {
+  .it('should create a typescript component the `--typescript` flag is set', async _ctx => {
     const parentFolder = await fs.pathExists(TEST_DIR)
     const targetTsFile = await fs.pathExists(`${TEST_DIR}/components/TestComponent/TestComponent.ts`)
-    const targetCssFile = await fs.pathExists(`${TEST_DIR}/components/TestComponent/TestComponent.module.css`)
 
     expect(parentFolder).to.be.true
     expect(targetTsFile).to.be.true
-    expect(targetCssFile).to.be.true
 
     const targetJsFile = await fs.pathExists(`${TEST_DIR}/components/TestComponent/TestComponent.js`)
     expect(targetJsFile).to.be.false
   })
 
   test
-  .skip()
   .stdout()
-  .command(['component', 'TestComponent', '--dest', `${TEST_DIR}/components`, '--style', 'scss'])
-  .it('should create a .scss stylesheet if the `--style` flag equals `scss`', async _ctx => {
+  .command(['component', 'TestComponent', '--dest', `${TEST_DIR}/components`, '--scss'])
+  .it('should create a .scss stylesheet if the `--scss` flag is set', async _ctx => {
     const parentFolder = await fs.pathExists(TEST_DIR)
     const targetJsFile = await fs.pathExists(`${TEST_DIR}/components/TestComponent/TestComponent.js`)
     const targetCssFile = await fs.pathExists(`${TEST_DIR}/components/TestComponent/TestComponent.module.scss`)
-
     expect(parentFolder).to.be.true
     expect(targetJsFile).to.be.true
-    expect(targetCssFile).to.be.true // ! Assertion fails here
+    expect(targetCssFile).to.be.true
+
+    const targetJsFileContent = await fs.readFile(`${TEST_DIR}/components/TestComponent/TestComponent.js`, 'utf-8')
+    expect(targetJsFileContent).to.contain("import styles from './TestComponent.module.scss';")
   })
 })

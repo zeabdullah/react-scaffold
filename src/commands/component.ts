@@ -11,12 +11,7 @@ export default class Component extends Command {
   static flags = {
     dest: Flags.string({char: 'd', description: 'Destination folder', required: false, default: 'src/components'}),
     typescript: Flags.boolean({description: 'Create a TypeScript component', required: false}),
-    style: Flags.string({
-      description: 'Set which type of styling to use',
-      required: false,
-      default: 'css',
-      options: ['css', 'scss', 'tw'],
-    }),
+    scss: Flags.boolean({description: 'Use scss as the stylesheet', required: false}),
   };
 
   static args = [{name: 'componentName'}];
@@ -25,17 +20,19 @@ export default class Component extends Command {
     componentName: string,
     destination: string,
     isTypescript?: boolean
+    isScss?: boolean
   }): Promise<void> {
-    const {componentName, destination, isTypescript} = config
+    const {componentName, destination, isTypescript, isScss} = config
 
-    const jsContent = templates.createJsTemplate(componentName)
-    const tsContent = templates.createTsTemplate(componentName)
+    const jsContent = templates.createJsTemplate(componentName, isScss)
+    const tsContent = templates.createTsTemplate(componentName, isScss)
     const cssContent = templates.createCssTemplate(componentName)
 
     const ext = isTypescript ? 'ts' : 'js'
+    const cssExt = isScss ? 'scss' : 'css'
     await fs.mkdirp(`${destination}/${componentName}`)
     await fs.writeFile(`${destination}/${componentName}/${componentName}.${ext}`, isTypescript ? tsContent : jsContent)
-    await fs.writeFile(`${destination}/${componentName}/${componentName}.module.css`, cssContent)
+    await fs.writeFile(`${destination}/${componentName}/${componentName}.module.${cssExt}`, cssContent)
 
     this.log(`✅ Created ${componentName} at ${destination}/${componentName}`)
   }
@@ -57,6 +54,7 @@ export default class Component extends Command {
       componentName: args.componentName,
       destination: flags.dest || 'src/components',
       isTypescript: flags.typescript,
+      isScss: flags.scss,
     })
   }
 }
