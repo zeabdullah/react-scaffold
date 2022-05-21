@@ -73,26 +73,22 @@ export default MyComponent;
   .stdout()
   .command(['component', 'TestComponent', '--dest', `${TEST_DIR}/components`, '--typescript'])
   .it('should create a typescript component when the `--typescript` flag is set', async _ctx => {
-    const parentFolder = await fs.pathExists(TEST_DIR)
-    const targetTsFile = await fs.pathExists(`${TEST_DIR}/components/TestComponent/TestComponent.tsx`)
-
-    expect(parentFolder).to.be.true
-    expect(targetTsFile).to.be.true
-
-    const targetJsFile = await fs.pathExists(`${TEST_DIR}/components/TestComponent/TestComponent.js`)
-    expect(targetJsFile).to.be.false
+    expect(await fs.pathExists(TEST_DIR)).to.be.true
+    expect(await fs.pathExists(`${TEST_DIR}/components`)).to.be.true
+    expect(await fs.pathExists(`${TEST_DIR}/components/TestComponent`)).to.be.true
+    expect(await fs.pathExists(`${TEST_DIR}/components/TestComponent/TestComponent.tsx`)).to.be.true
+    expect(await fs.pathExists(`${TEST_DIR}/components/TestComponent/TestComponent.js`)).to.be.false
   })
 
   test
   .stdout()
   .command(['component', 'TestComponent', '--dest', `${TEST_DIR}/components`, '--scss'])
   .it('should create a .scss stylesheet if the `--scss` flag is set', async _ctx => {
-    const parentFolder = await fs.pathExists(TEST_DIR)
-    const targetJsFile = await fs.pathExists(`${TEST_DIR}/components/TestComponent/TestComponent.js`)
-    const targetCssFile = await fs.pathExists(`${TEST_DIR}/components/TestComponent/TestComponent.module.scss`)
-    expect(parentFolder).to.be.true
-    expect(targetJsFile).to.be.true
-    expect(targetCssFile).to.be.true
+    expect(await fs.pathExists(TEST_DIR)).to.be.true
+    expect(await fs.pathExists(`${TEST_DIR}/components`)).to.be.true
+    expect(await fs.pathExists(`${TEST_DIR}/components/TestComponent`)).to.be.true
+    expect(await fs.pathExists(`${TEST_DIR}/components/TestComponent/TestComponent.js`)).to.be.true
+    expect(await fs.pathExists(`${TEST_DIR}/components/TestComponent/TestComponent.module.scss`)).to.be.true
 
     const targetJsFileContent = await fs.readFile(`${TEST_DIR}/components/TestComponent/TestComponent.js`, 'utf-8')
     expect(targetJsFileContent).to.contain("import styles from './TestComponent.module.scss';")
