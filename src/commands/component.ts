@@ -1,7 +1,7 @@
 import {Command, Flags} from '@oclif/core'
 import * as fs from 'fs-extra'
-import * as templates from '../templates'
 import {isPascalCase} from '../helpers'
+import ComponentTemplate from '../templates/ComponentTemplate'
 
 export default class Component extends Command {
   static description = 'Scaffold a React component';
@@ -24,14 +24,18 @@ export default class Component extends Command {
   }): Promise<void> {
     const {componentName, destination, isTypescript, isScss} = config
 
-    const jsContent = templates.createJsTemplate(componentName, isScss)
-    const tsContent = templates.createTsTemplate(componentName, isScss)
-    const cssContent = templates.createCssTemplate(componentName)
+    const compTemplate = new ComponentTemplate(componentName, {
+      isTypescript,
+      isScss,
+    })
 
-    const ext = isTypescript ? 'ts' : 'js'
+    const mainModuleContent = compTemplate.getMainTemplate()
+    const cssContent = compTemplate.getCssTemplate()
+
+    const ext = isTypescript ? 'tsx' : 'js'
     const cssExt = isScss ? 'scss' : 'css'
     await fs.mkdirp(`${destination}/${componentName}`)
-    await fs.writeFile(`${destination}/${componentName}/${componentName}.${ext}`, isTypescript ? tsContent : jsContent)
+    await fs.writeFile(`${destination}/${componentName}/${componentName}.${ext}`, mainModuleContent)
     await fs.writeFile(`${destination}/${componentName}/${componentName}.module.${cssExt}`, cssContent)
 
     this.log(`✅ Created ${componentName} at ${destination}/${componentName}`)

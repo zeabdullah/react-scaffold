@@ -1,8 +1,6 @@
-/* eslint-disable unicorn/prefer-spread */
+export const cssTemplate = '.TemplateName {}'
 
-const cssTemplate = '.TemplateName {}'
-
-const jsTemplate = `import React from 'react';
+export const jsTemplate = `import React from 'react';
 import styles from './TemplateName.module.CSS_EXT';
 
 function TemplateName() {
@@ -12,7 +10,7 @@ function TemplateName() {
 export default TemplateName;
 `
 
-const tsTemplate = `import React from 'react';
+export const tsTemplate = `import React from 'react';
 import styles from './TemplateName.module.CSS_EXT';
 
 interface TemplateNameProps {}
@@ -23,20 +21,3 @@ function TemplateName(): JSX.Element {
 
 export default TemplateName;
 `
-
-export function createJsTemplate(componentName: string, scssImport?: boolean): string {
-  const templateCopy = jsTemplate.slice()
-  const cssExt = scssImport ? 'scss' : 'css'
-  return templateCopy.replace(/TemplateName/g, componentName).replace(/CSS_EXT/g, cssExt)
-}
-
-export function createTsTemplate(componentName: string, scssImport?: boolean): string {
-  const templateCopy = tsTemplate.slice()
-  const cssExt = scssImport ? 'scss' : 'css'
-  return templateCopy.replace(/TemplateName/g, componentName).replace(/CSS_EXT/g, cssExt)
-}
-
-export function createCssTemplate(componentName: string): string {
-  return cssTemplate.slice().replace(/TemplateName/g, componentName)
-}
-

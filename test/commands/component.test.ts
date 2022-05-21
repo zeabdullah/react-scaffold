@@ -72,9 +72,9 @@ export default MyComponent;
   test
   .stdout()
   .command(['component', 'TestComponent', '--dest', `${TEST_DIR}/components`, '--typescript'])
-  .it('should create a typescript component the `--typescript` flag is set', async _ctx => {
+  .it('should create a typescript component when the `--typescript` flag is set', async _ctx => {
     const parentFolder = await fs.pathExists(TEST_DIR)
-    const targetTsFile = await fs.pathExists(`${TEST_DIR}/components/TestComponent/TestComponent.ts`)
+    const targetTsFile = await fs.pathExists(`${TEST_DIR}/components/TestComponent/TestComponent.tsx`)
 
     expect(parentFolder).to.be.true
     expect(targetTsFile).to.be.true
