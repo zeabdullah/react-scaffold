@@ -1,6 +1,7 @@
 export const cssTemplate = '.TemplateName {}'
 
-export const jsTemplate = `import React from 'react';
+export const jsTemplate =
+`import React from 'react';
 import styles from './TemplateName.module.CSS_EXT';
 
 function TemplateName() {
@@ -10,7 +11,8 @@ function TemplateName() {
 export default TemplateName;
 `
 
-export const tsTemplate = `import React from 'react';
+export const tsTemplate =
+`import React from 'react';
 import styles from './TemplateName.module.CSS_EXT';
 
 interface TemplateNameProps {}
