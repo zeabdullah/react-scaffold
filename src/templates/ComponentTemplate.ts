@@ -1,6 +1,11 @@
 /* eslint-disable unicorn/filename-case */
 /* eslint-disable unicorn/prefer-spread */
-import {cssTemplate, jsTemplate, tsTemplate} from './templates'
+import {cssTemplate, jsTemplate, tsTemplate} from './template-strings'
+
+interface TemplateConfig {
+  isTypescript?: boolean
+  isScss?: boolean
+}
 
 export default class ComponentTemplate {
   private componentName: string
@@ -18,6 +23,7 @@ export default class ComponentTemplate {
     return this.componentName
   }
 
+  // ? Should this method even exist?
   public setComponentName(value: string): ComponentTemplate {
     this.componentName = value
     return this
@@ -43,20 +49,17 @@ export default class ComponentTemplate {
     return this
   }
 
-  public getMainTemplate(): string {
+  public getScriptTemplate(): string {
     const {isTypescript, isScss} = this.config
     const templateCopy: string = (isTypescript ? tsTemplate : jsTemplate).concat()
     const cssExt = isScss ? 'scss' : 'css'
 
-    return templateCopy.replace(/TemplateName/g, this.componentName).replace(/CSS_EXT/g, cssExt)
+    return templateCopy
+    .replace(/TemplateName/g, this.componentName)
+    .replace(/CSS_EXT/g, cssExt)
   }
 
   public getCssTemplate(): string {
     return cssTemplate.slice().replace(/TemplateName/g, this.componentName)
   }
-}
-
-interface TemplateConfig {
-  isTypescript?: boolean
-  isScss?: boolean
 }
