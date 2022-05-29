@@ -31,9 +31,9 @@ export default class Component extends Command {
 
     const ext = isTypescript ? 'tsx' : 'js'
     const cssExt = isScss ? 'scss' : 'css'
-    await fs.mkdirp(`${destination}/${componentName}`)
-    await fs.writeFile(`${destination}/${componentName}/${componentName}.${ext}`, compTemplate.getScriptTemplate())
-    await fs.writeFile(`${destination}/${componentName}/${componentName}.module.${cssExt}`, compTemplate.getCssTemplate())
+    fs.mkdirpSync(`${destination}/${componentName}`)
+    fs.writeFileSync(`${destination}/${componentName}/${componentName}.${ext}`, compTemplate.getScriptTemplate())
+    fs.writeFileSync(`${destination}/${componentName}/${componentName}.module.${cssExt}`, compTemplate.getCssTemplate())
 
     this.log(`✅ Created ${componentName} at ${destination}/${componentName}`)
   }
