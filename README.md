@@ -1,7 +1,7 @@
 react-scaffold
 =================
 
-_Please ignore the README for now._
+### **_Please ignore this README for now._**
 
 oclif example Hello World CLI
 
