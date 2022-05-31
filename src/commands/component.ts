@@ -1,5 +1,5 @@
 import {Command, Flags} from '@oclif/core'
-import * as fs from 'fs-extra'
+import * as fs from 'node:fs'
 import {isPascalCase} from '../helpers'
 import ComponentTemplate from '../templates/ComponentTemplate'
 
@@ -31,7 +31,7 @@ export default class Component extends Command {
 
     const ext = isTypescript ? 'tsx' : 'js'
     const cssExt = isScss ? 'scss' : 'css'
-    fs.mkdirpSync(`${destination}/${componentName}`)
+    fs.mkdirSync(`${destination}/${componentName}`, {recursive: true})
     fs.writeFileSync(`${destination}/${componentName}/${componentName}.${ext}`, compTemplate.getScriptTemplate())
     fs.writeFileSync(`${destination}/${componentName}/${componentName}.module.${cssExt}`, compTemplate.getCssTemplate())
 
