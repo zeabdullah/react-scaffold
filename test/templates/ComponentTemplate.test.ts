@@ -5,16 +5,16 @@ import ComponentTemplate from '../../src/templates/ComponentTemplate'
 
 describe('ComponentTemplate Class', () => {
   it('should return a CSS+JavaScript template by default', () => {
-    const tp =  new ComponentTemplate('ExampleComponent')
+    const tp =  new ComponentTemplate('Example')
     const expectedJsTemplate =
 `import React from 'react';
-import styles from './ExampleComponent.module.css';
+import styles from './Example.module.css';
 
-function ExampleComponent() {
-  return <div className={styles.ExampleComponent}>ExampleComponent</div>
+function Example() {
+  return <div className={styles.Example}>Example</div>
 }
 
-export default ExampleComponent;
+export default Example;
 `
     expect(tp.getScriptTemplate()).to.eql(expectedJsTemplate)
   })
@@ -41,5 +41,38 @@ export default Example;
 `
 
     expect(tp.getScriptTemplate()).to.eql(expectedTsTemplate)
+  })
+
+  it('should automatically modify the template if config is changed after creation', () => {
+    const tp = new ComponentTemplate('Example')
+    const expectedFirstTemplate =
+`import React from 'react';
+import styles from './Example.module.css';
+
+function Example() {
+  return <div className={styles.Example}>Example</div>
+}
+
+export default Example;
+`
+    const expectedSecondTemplate =
+`import React from 'react';
+import styles from './Example.module.scss';
+
+interface ExampleProps {}
+
+function Example(): JSX.Element {
+  return <div className={styles.Example}>Example</div>
+}
+
+export default Example;
+`
+
+    expect(tp.getScriptTemplate()).to.eql(expectedFirstTemplate)
+    expect(tp.getScriptTemplate()).to.contain("import styles from './Example.module.css';")
+    tp.setSass()
+    expect(tp.getScriptTemplate()).to.contain("import styles from './Example.module.scss';")
+    tp.setTypescript()
+    expect(tp.getScriptTemplate()).to.eql(expectedSecondTemplate)
   })
 })
