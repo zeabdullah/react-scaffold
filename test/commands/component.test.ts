@@ -8,7 +8,7 @@ function purgeTestFolders() {
   fs.rm('src/components', {recursive: true, force: true}).catch()
 }
 
-describe('react-scaffold component', () => {
+describe('rsx component', () => {
   const TEST_DIR = 'tmp/src'
 
   beforeEach(purgeTestFolders)

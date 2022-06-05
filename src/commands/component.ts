@@ -6,7 +6,10 @@ import ComponentTemplate from '../templates/ComponentTemplate'
 export default class Component extends Command {
   static description = 'Scaffold a React component';
   static strict = false
-  // static examples = ['<%= config.bin %> <%= command.id %> '];
+  static examples = [
+    '<%= config.bin %> <%= command.id %> ComponentOne ComponentTwo',
+    '<%= config.bin %> <%= command.id %> ComponentOne --typescript -scss --dest src/components/layout',
+  ];
 
   static flags = {
     dest: Flags.string({char: 'd', description: 'Destination folder', required: false, default: 'src/components'}),
