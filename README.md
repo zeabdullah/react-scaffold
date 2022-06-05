@@ -16,11 +16,11 @@ Scaffold your React app from the command line.
 # Usage
 <!-- usage -->
 ```sh-session
-$ npm install -g react-scaffold
+$ npm install -g react-scaffoldx
 $ rsx COMMAND
 running command...
 $ rsx (--version)
-react-scaffold/0.2.0 linux-x64 node-v16.15.0
+react-scaffoldx/0.2.0 linux-x64 node-v16.15.0
 $ rsx --help [COMMAND]
 USAGE
   $ rsx COMMAND
@@ -29,7 +29,32 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
+* [`rsx component`](#rsx-component)
 * [`rsx help [COMMAND]`](#rsx-help-command)
+
+## `rsx component`
+
+Scaffold a React component
+
+```
+USAGE
+  $ rsx component [-d <value>] [--typescript] [--scss]
+
+FLAGS
+  -d, --dest=<value>  [default: src/components] Destination folder
+  --scss              Use scss as the stylesheet
+  --typescript        Create a TypeScript component
+
+DESCRIPTION
+  Scaffold a React component
+
+EXAMPLES
+  $ rsx component ComponentOne ComponentTwo
+
+  $ rsx component ComponentOne --typescript -scss --dest src/components/layout
+```
+
+_See code: [dist/commands/component.ts](https://github.com/AbdullahZeidan/react-scaffold/blob/v0.2.0/dist/commands/component.ts)_
 
 ## `rsx help [COMMAND]`
 
