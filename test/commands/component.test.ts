@@ -19,7 +19,7 @@ describe('react-scaffold component', () => {
   .stdout()
   .command(['component'])
   .it('should expect a <ComponentName> argument', ctx => {
-    expect(ctx.stdout).to.contain('Missing Argument: <ComponentName>')
+    expect(ctx.stdout).to.contain('❌ Missing Argument: <ComponentName>')
     expect(ctx.stdout).to.not.contain('✅ Created')
   })
 
@@ -27,7 +27,7 @@ describe('react-scaffold component', () => {
   .stdout()
   .command(['component', 'componentName'])
   .it('should expect <ComponentName> argument to be PascalCase', ctx => {
-    expect(ctx.stdout).to.contain('Invalid Argument: componentName must be in PascalCase')
+    expect(ctx.stdout).to.contain('❌ Invalid Argument: componentName must be in PascalCase')
     expect(ctx.stdout).to.not.contain('✅ Created')
   })
 

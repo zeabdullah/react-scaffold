@@ -42,14 +42,14 @@ export default class Component extends Command {
     const {flags, argv} = await this.parse(Component)
 
     if (this.argv.length === 0) {
-      this.log('Missing Argument: <ComponentName>')
-      this.exit(1)
+      this.log('❌ Missing Argument: <ComponentName>')
+      return
     }
 
     for await (const arg of argv) {
       if (!isPascalCase(arg)) {
-        this.log(`Invalid Argument: ${arg} must be in PascalCase`)
-        this.exit(1)
+        this.log(`❌ Invalid Argument: ${arg} must be in PascalCase`)
+        return
       }
 
       await this.createComponent({
