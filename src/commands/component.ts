@@ -14,8 +14,6 @@ export default class Component extends Command {
     scss: Flags.boolean({description: 'Use scss as the stylesheet', required: false}),
   };
 
-  // static args = [{name: 'componentName'}];
-
   private async createComponent(config: {
     componentName: string,
     destination: string,

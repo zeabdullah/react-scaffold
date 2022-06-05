@@ -2,18 +2,17 @@ import {expect, test} from '@oclif/test'
 import * as fs from 'fs-extra'
 import ComponentTemplate from '../../src/templates/ComponentTemplate'
 
+// ? Deletes the following test folders, if present
+function purgeTestFolders() {
+  fs.rm('tmp', {recursive: true, force: true}).catch()
+  fs.rm('src/components', {recursive: true, force: true}).catch()
+}
+
 describe('react-scaffold component', () => {
   const TEST_DIR = 'tmp/src'
 
-  beforeEach(() => {
-    // ? Deletes the following test folders, if present
-    fs.remove('tmp').catch()
-    fs.remove('src/components').catch()
-  })
-  afterEach(() => {
-    fs.remove('tmp').catch()
-    fs.remove('src/components').catch()
-  })
+  beforeEach(purgeTestFolders)
+  afterEach(purgeTestFolders)
 
   test
   .stdout()

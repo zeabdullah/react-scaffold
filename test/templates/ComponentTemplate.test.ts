@@ -1,6 +1,5 @@
 /* eslint-disable unicorn/filename-case */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import {expect, test} from '@oclif/test'
+import {expect} from '@oclif/test'
 import ComponentTemplate from '../../src/templates/ComponentTemplate'
 
 describe('ComponentTemplate Class', () => {
