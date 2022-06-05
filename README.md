@@ -20,7 +20,7 @@ $ npm install -g react-scaffoldx
 $ rsx COMMAND
 running command...
 $ rsx (--version)
-react-scaffoldx/0.2.0 linux-x64 node-v16.15.0
+react-scaffoldx/0.2.1 linux-x64 node-v16.15.0
 $ rsx --help [COMMAND]
 USAGE
   $ rsx COMMAND
@@ -54,7 +54,7 @@ EXAMPLES
   $ rsx component ComponentOne --typescript -scss --dest src/components/layout
 ```
 
-_See code: [dist/commands/component.ts](https://github.com/AbdullahZeidan/react-scaffold/blob/v0.2.0/dist/commands/component.ts)_
+_See code: [dist/commands/component.ts](https://github.com/AbdullahZeidan/react-scaffold/blob/v0.2.1/dist/commands/component.ts)_
 
 ## `rsx help [COMMAND]`
 
