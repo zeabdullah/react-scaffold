@@ -20,7 +20,7 @@ $ npm install -g react-scaffold
 $ react-scaffold COMMAND
 running command...
 $ react-scaffold (--version)
-react-scaffold/0.1.0 win32-x64 node-v16.13.1
+react-scaffold/0.2.0 linux-x64 node-v16.15.0
 $ react-scaffold --help [COMMAND]
 USAGE
   $ react-scaffold COMMAND
@@ -29,8 +29,7 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`react-scaffold hello PERSON`](#react-scaffold-hello-person)
-* [`react-scaffold hello world`](#react-scaffold-hello-world)
+* [`react-scaffold component`](#react-scaffold-component)
 * [`react-scaffold help [COMMAND]`](#react-scaffold-help-command)
 * [`react-scaffold plugins`](#react-scaffold-plugins)
 * [`react-scaffold plugins:install PLUGIN...`](#react-scaffold-pluginsinstall-plugin)
@@ -42,45 +41,24 @@ USAGE
 * [`react-scaffold plugins:uninstall PLUGIN...`](#react-scaffold-pluginsuninstall-plugin-2)
 * [`react-scaffold plugins update`](#react-scaffold-plugins-update)
 
-## `react-scaffold hello PERSON`
+## `react-scaffold component`
 
-Say hello
+Scaffold a React component
 
 ```
 USAGE
-  $ react-scaffold hello [PERSON] -f <value>
-
-ARGUMENTS
-  PERSON  Person to say hello to
+  $ react-scaffold component [-d <value>] [--typescript] [--scss]
 
 FLAGS
-  -f, --from=<value>  (required) Whom is saying hello
+  -d, --dest=<value>  [default: src/components] Destination folder
+  --scss              Use scss as the stylesheet
+  --typescript        Create a TypeScript component
 
 DESCRIPTION
-  Say hello
-
-EXAMPLES
-  $ oex hello friend --from oclif
-  hello friend from oclif! (./src/commands/hello/index.ts)
+  Scaffold a React component
 ```
 
-_See code: [dist/commands/hello/index.ts](https://github.com/AbdullahZeidan/react-scaffold/blob/v0.1.0/dist/commands/hello/index.ts)_
-
-## `react-scaffold hello world`
-
-Say hello world
-
-```
-USAGE
-  $ react-scaffold hello world
-
-DESCRIPTION
-  Say hello world
-
-EXAMPLES
-  $ oex hello world
-  hello world! (./src/commands/hello/world.ts)
-```
+_See code: [dist/commands/component.ts](https://github.com/AbdullahZeidan/react-scaffold/blob/v0.2.0/dist/commands/component.ts)_
 
 ## `react-scaffold help [COMMAND]`
 
