@@ -5,7 +5,7 @@ import ComponentTemplate from '../templates/ComponentTemplate'
 
 export default class Component extends Command {
   static description = 'Scaffold a React component';
-
+  static strict = false
   // static examples = ['<%= config.bin %> <%= command.id %> '];
 
   static flags = {
@@ -14,7 +14,7 @@ export default class Component extends Command {
     scss: Flags.boolean({description: 'Use scss as the stylesheet', required: false}),
   };
 
-  static args = [{name: 'componentName'}];
+  // static args = [{name: 'componentName'}];
 
   private async createComponent(config: {
     componentName: string,
@@ -39,23 +39,25 @@ export default class Component extends Command {
   }
 
   public async run(): Promise<void> {
-    const {args, flags} = await this.parse(Component)
+    const {flags, argv} = await this.parse(Component)
 
-    if (!args.componentName) {
+    if (this.argv.length === 0) {
       this.log('Missing Argument: <ComponentName>')
-      return
+      this.exit(1)
     }
 
-    if (!isPascalCase(args.componentName)) {
-      this.log(`Invalid Argument: ${args.componentName} must be in PascalCase`)
-      return
-    }
+    for await (const arg of argv) {
+      if (!isPascalCase(arg)) {
+        this.log(`Invalid Argument: ${arg} must be in PascalCase`)
+        this.exit(1)
+      }
 
-    await this.createComponent({
-      componentName: args.componentName,
-      destination: flags.dest || 'src/components',
-      isTypescript: flags.typescript,
-      isScss: flags.scss,
-    })
+      await this.createComponent({
+        componentName: arg,
+        destination: flags.dest || 'src/components',
+        isTypescript: flags.typescript,
+        isScss: flags.scss,
+      })
+    }
   }
 }

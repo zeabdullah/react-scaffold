@@ -75,10 +75,12 @@ describe('react-scaffold component', () => {
   })
 
   test
-  .skip()
   .stdout()
   .command(['component', 'TestComponent', 'AnotherComponent', 'Andanotherone'])
   .it('should be able to create multiple components in the same directory when given multiple arguments', async _ctx => {
-    // TODO: unit test implementation
+    const prePath = 'src/components'
+    expect(fs.pathExistsSync(`${prePath}/TestComponent/TestComponent.js`)).to.be.true
+    expect(fs.pathExistsSync(`${prePath}/AnotherComponent/AnotherComponent.js`)).to.be.true
+    expect(fs.pathExistsSync(`${prePath}/Andanotherone/Andanotherone.js`)).to.be.true
   })
 })
