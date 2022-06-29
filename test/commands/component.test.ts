@@ -46,32 +46,29 @@ describe('rsx component', () => {
     expect(cssFileContent).to.eql(compTemplate.getCssTemplate())
   })
 
+  const COMP_PATH = `${TEST_DIR}/components/TestComponent`
   test
   .stdout()
   .command(['component', 'TestComponent', '--dest', `${TEST_DIR}/components`])
   .it('should create a component named TestComponent in a given directory', async _ctx => {
-    const compPath = `${TEST_DIR}/components/TestComponent`
-    expect(fs.pathExistsSync(`${compPath}/TestComponent.js`)).to.be.true
-    expect(fs.pathExistsSync(`${compPath}/TestComponent.module.css`)).to.be.true
+    expect(fs.pathExistsSync(`${COMP_PATH}/TestComponent.js`)).to.be.true
+    expect(fs.pathExistsSync(`${COMP_PATH}/TestComponent.module.css`)).to.be.true
   })
 
   test
   .stdout()
   .command(['component', 'TestComponent', '--dest', `${TEST_DIR}/components`, '--typescript'])
   .it('should create a typescript component when the `--typescript` flag is set', async _ctx => {
-    const compPath = `${TEST_DIR}/components/TestComponent`
-    expect(fs.pathExistsSync(`${compPath}/TestComponent.tsx`)).to.be.true
-    expect(fs.pathExistsSync(`${compPath}/TestComponent.js`)).to.be.false
+    expect(fs.pathExistsSync(`${COMP_PATH}/TestComponent.tsx`)).to.be.true
+    expect(fs.pathExistsSync(`${COMP_PATH}/TestComponent.js`)).to.be.false
   })
 
   test
   .stdout()
   .command(['component', 'TestComponent', '--dest', `${TEST_DIR}/components`, '--scss'])
   .it('should create a .scss stylesheet if the `--scss` flag is set', async _ctx => {
-    const compPath = `${TEST_DIR}/components/TestComponent`
-    expect(fs.pathExistsSync(`${compPath}/TestComponent.js`)).to.be.true
-    expect(fs.pathExistsSync(`${compPath}/TestComponent.module.scss`)).to.be.true
-
+    expect(fs.pathExistsSync(`${COMP_PATH}/TestComponent.js`)).to.be.true
+    expect(fs.pathExistsSync(`${COMP_PATH}/TestComponent.module.scss`)).to.be.true
     const targetJsFileContent = fs.readFileSync(`${TEST_DIR}/components/TestComponent/TestComponent.js`, 'utf-8')
     expect(targetJsFileContent).to.contain("import styles from './TestComponent.module.scss';")
   })
