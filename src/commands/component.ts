@@ -4,7 +4,7 @@ import {isPascalCase} from '../helpers'
 import ComponentTemplate from '../templates/ComponentTemplate'
 
 export default class Component extends Command {
-  static description = 'Scaffold a React component';
+  static description = 'Create/Scaffold a React component';
   static strict = false
   static examples = [
     '<%= config.bin %> <%= command.id %> ComponentOne ComponentTwo',
