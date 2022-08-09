@@ -5,9 +5,9 @@ react-scaffold
 
 Scaffold your React app from the command line.
 
-[![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![Downloads/week](https://img.shields.io/npm/dw/oclif-hello-world.svg)](https://npmjs.org/package/oclif-hello-world)
-[![License](https://img.shields.io/npm/l/oclif-hello-world.svg)](https://github.com/oclif/hello-world/blob/main/package.json)
+[![Downloads/week](https://img.shields.io/npm/dm/react-scaffoldx?color=black)](https://npmjs.org/package/react-scaffoldx)
+[![Build status](https://img.shields.io/github/workflow/status/abdullahzeidan/react-scaffold/react-scaffold%20CI%20Pipeline?label=build&logo=mocha&logoColor=white)](https://github.com/AbdullahZeidan/react-scaffold/actions/workflows/ci.yml)
+[![License](https://img.shields.io/npm/l/react-scaffoldx?color=purple)](https://github.com/oclif/hello-world/blob/main/package.json)
 
 <!-- toc -->
 * [Usage](#usage)
