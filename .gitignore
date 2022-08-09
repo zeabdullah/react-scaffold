@@ -11,6 +11,7 @@ oclif.manifest.json
 # Used in some unit tests
 src/components/
 mock/
+.rsxrc
 
 # IDEs
 .idea/*

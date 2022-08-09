@@ -1,4 +1,7 @@
 {
-   "editor.tabSize": 2,
-   "prettier.bracketSpacing": false
+  "editor.tabSize": 2,
+  "prettier.bracketSpacing": false,
+  "prettier.semi": false,
+  "prettier.printWidth": 90,
+  "prettier.singleQuote": true,
 }
