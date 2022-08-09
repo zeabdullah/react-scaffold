@@ -20,7 +20,7 @@ $ npm install -g react-scaffoldx
 $ rsx COMMAND
 running command...
 $ rsx (--version)
-react-scaffoldx/0.2.1 linux-x64 node-v16.15.0
+react-scaffoldx/0.3.0 win32-x64 node-v16.13.1
 $ rsx --help [COMMAND]
 USAGE
   $ rsx COMMAND
@@ -31,10 +31,11 @@ USAGE
 <!-- commands -->
 * [`rsx component`](#rsx-component)
 * [`rsx help [COMMAND]`](#rsx-help-command)
+* [`rsx init`](#rsx-init)
 
 ## `rsx component`
 
-Scaffold a React component
+Create/Scaffold a React component
 
 ```
 USAGE
@@ -46,7 +47,7 @@ FLAGS
   --typescript        Create a TypeScript component
 
 DESCRIPTION
-  Scaffold a React component
+  Create/Scaffold a React component
 
 EXAMPLES
   $ rsx component ComponentOne ComponentTwo
@@ -54,7 +55,7 @@ EXAMPLES
   $ rsx component ComponentOne --typescript -scss --dest src/components/layout
 ```
 
-_See code: [dist/commands/component.ts](https://github.com/AbdullahZeidan/react-scaffold/blob/v0.2.1/dist/commands/component.ts)_
+_See code: [dist/commands/component.ts](https://github.com/AbdullahZeidan/react-scaffold/blob/v0.3.0/dist/commands/component.ts)_
 
 ## `rsx help [COMMAND]`
 
@@ -75,4 +76,21 @@ DESCRIPTION
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.1.12/src/commands/help.ts)_
+
+## `rsx init`
+
+Initialize react-scaffold's config file (.rsxrc)
+
+```
+USAGE
+  $ rsx init [-y]
+
+FLAGS
+  -y, --yes  accept default config values ('assume YES')
+
+DESCRIPTION
+  Initialize react-scaffold's config file (.rsxrc)
+```
+
+_See code: [dist/commands/init.ts](https://github.com/AbdullahZeidan/react-scaffold/blob/v0.3.0/dist/commands/init.ts)_
 <!-- commandsstop -->

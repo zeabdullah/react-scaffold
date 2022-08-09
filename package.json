@@ -1,6 +1,6 @@
 {
   "name": "react-scaffoldx",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Scaffold your React app from the command line.",
   "author": "Abdullah Zeidan @AbdullahZeidan",
   "bin": {
