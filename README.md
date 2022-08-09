@@ -1,7 +1,7 @@
 react-scaffold
 =================
 
-### **_Please ignore this README for now._**
+### **_⚠ Documentation is a work in progress. Please ignore this README for now. ⚠_**
 
 Scaffold your React app from the command line.
 
