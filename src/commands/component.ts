@@ -1,5 +1,5 @@
 import {Command, Flags} from '@oclif/core'
-import * as fs from 'node:fs'
+import fs from 'fs-extra'
 import {isPascalCase} from '../helpers'
 import ComponentTemplate from '../templates/ComponentTemplate'
 
@@ -17,26 +17,25 @@ export default class Component extends Command {
     scss: Flags.boolean({description: 'Use scss as the stylesheet', required: false}),
   };
 
-  private async createComponent(config: {
-    componentName: string,
+  private async createComponent(name: string, config: {
     destination: string,
     isTypescript?: boolean
     isScss?: boolean
   }): Promise<void> {
-    const {componentName, destination, isTypescript, isScss} = config
+    const {destination, isTypescript, isScss} = config
 
-    const compTemplate = new ComponentTemplate(componentName, {
+    const compTemplate = new ComponentTemplate(name, {
       isTypescript,
       isScss,
     })
 
     const ext = isTypescript ? 'tsx' : 'js'
     const cssExt = isScss ? 'scss' : 'css'
-    fs.mkdirSync(`${destination}/${componentName}`, {recursive: true})
-    fs.writeFileSync(`${destination}/${componentName}/${componentName}.${ext}`, compTemplate.getScriptTemplate())
-    fs.writeFileSync(`${destination}/${componentName}/${componentName}.module.${cssExt}`, compTemplate.getCssTemplate())
+    fs.mkdirSync(`${destination}/${name}`, {recursive: true})
+    fs.writeFileSync(`${destination}/${name}/${name}.${ext}`, compTemplate.getScriptTemplate())
+    fs.writeFileSync(`${destination}/${name}/${name}.module.${cssExt}`, compTemplate.getCssTemplate())
 
-    this.log(`✅ Created ${componentName} at ${destination}/${componentName}`)
+    this.log(`✅ Created ${name} at ${destination}/${name}`)
   }
 
   public async run(): Promise<void> {
@@ -53,8 +52,7 @@ export default class Component extends Command {
         return
       }
 
-      await this.createComponent({
-        componentName: arg,
+      await this.createComponent(arg, {
         destination: flags.dest || 'src/components',
         isTypescript: flags.typescript,
         isScss: flags.scss,

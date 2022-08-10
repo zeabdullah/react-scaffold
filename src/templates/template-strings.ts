@@ -1,25 +1,25 @@
-export const cssTemplate = '.TemplateName {}'
+export const cssTemplate = '.COMPONENT_NAME {}'
 
 export const jsTemplate =
 `import React from 'react';
-import styles from './TemplateName.module.CSS_EXT';
+import styles from './COMPONENT_NAME.module.CSS_EXT';
 
-function TemplateName() {
-  return <div className={styles.TemplateName}>TemplateName</div>
+function COMPONENT_NAME() {
+  return <div className={styles.COMPONENT_NAME}>COMPONENT_NAME</div>
 }
 
-export default TemplateName;
+export default COMPONENT_NAME;
 `
 
 export const tsTemplate =
 `import React from 'react';
-import styles from './TemplateName.module.CSS_EXT';
+import styles from './COMPONENT_NAME.module.CSS_EXT';
 
-interface TemplateNameProps {}
+interface COMPONENT_NAMEProps {}
 
-function TemplateName(): JSX.Element {
-  return <div className={styles.TemplateName}>TemplateName</div>
+function COMPONENT_NAME(): JSX.Element {
+  return <div className={styles.COMPONENT_NAME}>COMPONENT_NAME</div>
 }
 
-export default TemplateName;
+export default COMPONENT_NAME;
 `

@@ -55,11 +55,11 @@ export default class ComponentTemplate {
     const cssExt = isScss ? 'scss' : 'css'
 
     return templateCopy
-    .replace(/TemplateName/g, this.componentName)
+    .replace(/COMPONENT_NAME/g, this.componentName)
     .replace(/CSS_EXT/g, cssExt)
   }
 
   public getCssTemplate(): string {
-    return cssTemplate.slice().replace(/TemplateName/g, this.componentName)
+    return cssTemplate.slice().replace(/COMPONENT_NAME/g, this.componentName)
   }
 }
