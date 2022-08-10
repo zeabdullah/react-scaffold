@@ -1,5 +1,7 @@
 import {expect, test} from '@oclif/test'
-import * as fs from 'fs-extra'
+import fs from 'fs-extra'
+import mock from 'mock-fs'
+import path from 'node:path'
 import ComponentTemplate from '../../src/templates/ComponentTemplate'
 
 // ? Deletes the following test folders, if present
@@ -11,8 +13,16 @@ function purgeTestFolders() {
 describe('rsx component', () => {
   const TEST_DIR = 'tmp/src'
 
+  before(() => mock({
+    'package.json': mock.load(path.resolve(__dirname, '../../package.json')),
+    'tsconfig.json': mock.load(path.resolve(__dirname, '../../tsconfig.json')),
+    node_modules: mock.load(path.resolve(__dirname, '../../node_modules')),
+    src: mock.load(path.resolve(__dirname, '../../src')),
+
+  }))
   beforeEach(purgeTestFolders)
   afterEach(purgeTestFolders)
+  after(mock.restore)
 
   test
   .stdout()
