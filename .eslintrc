@@ -5,6 +5,12 @@
   ],
   "rules": {
     "unicorn/prefer-module": "off",
-    "camelcase": "off"
+    "unicorn/filename-case": "off",
+    "camelcase": "off",
+    "eol-last": "warn",
+    "padding-line-between-statements": "off",
+    "comma-dangle": "warn",
+    "spaced-comment": "off",
+    "indent": ["error", 4]
   }
 }
