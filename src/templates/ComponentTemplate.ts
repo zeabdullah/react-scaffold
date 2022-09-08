@@ -1,65 +1,71 @@
-/* eslint-disable unicorn/filename-case */
 /* eslint-disable unicorn/prefer-spread */
-import {cssTemplate, jsTemplate, tsTemplate} from './template-strings'
+import {Style, type RsxConfig} from '../utils/config'
+import {
+    classNamePropString,
+    cssImportString,
+    cssTemplate,
+    jsTemplate,
+    styledComponentTemplate,
+    tsTemplate,
+} from './template-strings'
 
-interface TemplateConfig {
-  isTypescript?: boolean
-  isScss?: boolean
-}
+type TemplateConfig = Partial<RsxConfig>
 
 export default class ComponentTemplate {
-  private componentName: string
-  private config: TemplateConfig
+    private componentName: string
+    private config: TemplateConfig
 
-  constructor(componentName: string, config?: TemplateConfig) {
-    this.componentName = componentName
-    this.config = config ?? {
-      isTypescript: false,
-      isScss: false,
+    constructor(componentName: string, config?: TemplateConfig) {
+        this.componentName = componentName
+        this.config = config ?? {
+            typescript: false,
+            style: Style.css,
+            dest: 'src/components',
+        }
     }
-  }
 
-  public getComponentName(): string {
-    return this.componentName
-  }
+    public setStyleType(styleType: Style): ComponentTemplate {
+        this.config.style = styleType
+        return this
+    }
 
-  // ? Should this method even exist?
-  public setComponentName(value: string): ComponentTemplate {
-    this.componentName = value
-    return this
-  }
+    public setScriptType(scriptType: 'js' | 'ts'): ComponentTemplate {
+        this.config.typescript = scriptType === 'ts'
+        return this
+    }
 
-  public setTypescript(): ComponentTemplate {
-    this.config.isTypescript = true
-    return this
-  }
+    public getComponentName(): string {
+        return this.componentName
+    }
 
-  public setJavascript(): ComponentTemplate {
-    this.config.isTypescript = false
-    return this
-  }
+    public getStyleType(): Style {
+        return this.config.style ?? Style.css
+    }
 
-  public setSass(): ComponentTemplate {
-    this.config.isScss = true
-    return this
-  }
+    public getCssTemplate(): string {
+        return cssTemplate.slice().replace(/COMPONENT_NAME/g, this.componentName)
+    }
 
-  public setCss(): ComponentTemplate {
-    this.config.isScss = false
-    return this
-  }
+    public getScriptTemplate(): string {
+        const {typescript} = this.config
+        const styleType = this.getStyleType()
 
-  public getScriptTemplate(): string {
-    const {isTypescript, isScss} = this.config
-    const templateCopy: string = (isTypescript ? tsTemplate : jsTemplate).concat()
-    const cssExt = isScss ? 'scss' : 'css'
+        if (styleType === Style.styledComponents) {
+            return styledComponentTemplate.replace(/COMPONENT_NAME/g, this.componentName)
+        }
 
-    return templateCopy
-    .replace(/COMPONENT_NAME/g, this.componentName)
-    .replace(/CSS_EXT/g, cssExt)
-  }
+        const template = typescript ? tsTemplate : jsTemplate
+        if (styleType === Style.none) {
+            return template
+                .replace(/#CSS_IMPORT#/g, '')
+                .replace(/#CLASS_NAME#/g, '')
+                .replace(/COMPONENT_NAME/g, this.componentName)
+        }
 
-  public getCssTemplate(): string {
-    return cssTemplate.slice().replace(/COMPONENT_NAME/g, this.componentName)
-  }
+        return template
+            .replace(/#CSS_IMPORT#/g, cssImportString)
+            .replace(/#CLASS_NAME#/g, classNamePropString)
+            .replace(/COMPONENT_NAME/g, this.componentName)
+            .replace(/CSS_EXT/g, styleType)
+    }
 }
