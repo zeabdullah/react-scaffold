@@ -43,7 +43,7 @@ export default class ComponentTemplate {
     }
 
     public getCssTemplate(): string {
-        return cssTemplate.slice().replace(/COMPONENT_NAME/g, this.componentName)
+        return cssTemplate.slice().replace(/#COMPONENT_NAME#/g, this.componentName)
     }
 
     public getScriptTemplate(): string {
@@ -51,7 +51,7 @@ export default class ComponentTemplate {
         const styleType = this.getStyleType()
 
         if (styleType === Style.styledComponents) {
-            return styledComponentTemplate.replace(/COMPONENT_NAME/g, this.componentName)
+            return styledComponentTemplate.replace(/#COMPONENT_NAME#/g, this.componentName)
         }
 
         const template = typescript ? tsTemplate : jsTemplate
@@ -59,13 +59,13 @@ export default class ComponentTemplate {
             return template
                 .replace(/#CSS_IMPORT#/g, '')
                 .replace(/#CLASS_NAME#/g, '')
-                .replace(/COMPONENT_NAME/g, this.componentName)
+                .replace(/#COMPONENT_NAME#/g, this.componentName)
         }
 
         return template
             .replace(/#CSS_IMPORT#/g, cssImportString)
             .replace(/#CLASS_NAME#/g, classNamePropString)
-            .replace(/COMPONENT_NAME/g, this.componentName)
-            .replace(/CSS_EXT/g, styleType)
+            .replace(/#COMPONENT_NAME#/g, this.componentName)
+            .replace(/#CSS_EXT#/g, styleType)
     }
 }
