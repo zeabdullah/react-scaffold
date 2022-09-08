@@ -1,9 +1,27 @@
 import {type PathLike} from 'fs-extra'
 import readdirp from 'readdirp'
 
-export function isPascalCase(str: string): boolean {
-    const pascalCaseRegex = /^(?:[A-Z][a-z]+)+$/
-    return pascalCaseRegex.test(str)
+/*!
+ * is-var-name | ISC (c) Shinnosuke Watanabe
+ * https://github.com/shinnn/is-var-name
+ */
+export function isVarName(str: string): boolean {
+    if (typeof str !== 'string') {
+        return false
+    }
+
+    if (str.trim() !== str) {
+        return false
+    }
+
+    try {
+        // eslint-disable-next-line no-new-func, no-new
+        new Function(str, 'var ' + str)
+    } catch {
+        return false
+    }
+
+    return true
 }
 
 export async function getSubdirectories(

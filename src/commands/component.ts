@@ -1,7 +1,7 @@
 import {Command, Flags} from '@oclif/core'
 import c from 'ansi-colors'
 import fs from 'fs-extra'
-import {isPascalCase} from '../helpers'
+import {isVarName} from '../helpers'
 import ComponentTemplate from '../templates/ComponentTemplate'
 import {readRsxConfig, RsxConfig, Style} from '../utils/config'
 
@@ -77,8 +77,8 @@ export default class Component extends Command {
         }
 
         for await (const arg of argv) {
-            if (!isPascalCase(arg)) {
-                this.log(c.bold.red(`Invalid Argument: ${arg} must be in PascalCase`))
+            if (!isVarName(arg)) {
+                this.log(c.bold.red(`Invalid Argument: ${arg} must be a valid variable name`))
                 continue
             }
 

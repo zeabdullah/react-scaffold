@@ -8,7 +8,7 @@ export const jsTemplate = `
 import React from 'react';
 #CSS_IMPORT#
 function COMPONENT_NAME() {
-  return <div #CLASS_NAME#>COMPONENT_NAME</div>
+  return <div#CLASS_NAME#>COMPONENT_NAME</div>
 }
 
 export default COMPONENT_NAME;
@@ -20,7 +20,7 @@ import React from 'react';
 interface COMPONENT_NAMEProps {}
 
 function COMPONENT_NAME(props: COMPONENT_NAMEProps): JSX.Element {
-  return <div#CLASS_NAME#>COMPONENT_NAME</div#CLASS_NAME#>
+  return <div#CLASS_NAME#>COMPONENT_NAME</div>
 }
 
 export default COMPONENT_NAME;

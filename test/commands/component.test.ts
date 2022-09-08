@@ -38,11 +38,9 @@ describe('rsx component', () => {
         })
 
     test.stdout()
-        .command(['component', 'componentName'])
-        .it('should expect <ComponentName> argument to be PascalCase', ctx => {
-            expect(ctx.stdout).to.contain(
-                'Invalid Argument: componentName must be in PascalCase',
-            )
+        .command(['component', '3componentName'])
+        .it('should expect <ComponentName> argument to be a valid variable name', ctx => {
+            expect(ctx.stdout).to.contain('Invalid Argument')
             expect(ctx.stdout).to.not.contain('Created componentName')
         })
 
