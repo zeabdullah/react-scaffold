@@ -15,10 +15,10 @@ export interface RsxConfig {
     extraOptions?: {
         jest?: boolean
         includeIndex?: boolean
+        storybook?: boolean
     }
 }
 
-// const config: RsxConfig = JSON.parse(resolve(process.cwd(), '.rsxrc'))
 type EmptyObject = Record<string, never>
 export async function readRsxConfig(): Promise<RsxConfig | EmptyObject> {
     try {
@@ -28,5 +28,3 @@ export async function readRsxConfig(): Promise<RsxConfig | EmptyObject> {
         return {}
     }
 }
-
-// export default config

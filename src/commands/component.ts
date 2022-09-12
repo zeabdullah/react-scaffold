@@ -1,9 +1,9 @@
-import {Command, Flags} from '@oclif/core'
+import { Command, Flags } from '@oclif/core'
 import c from 'ansi-colors'
 import fs from 'fs-extra'
-import {isVarName} from '../helpers'
+import { isVarName } from '../helpers'
 import ComponentTemplate from '../templates/ComponentTemplate'
-import {readRsxConfig, RsxConfig, Style} from '../utils/config'
+import { readRsxConfig, RsxConfig, Style } from '../utils/config'
 
 export default class Component extends Command {
     static description = 'Create/Scaffold a React component'
@@ -20,7 +20,6 @@ export default class Component extends Command {
             char: 'd',
             description: 'Destination folder',
             required: false,
-            default: 'src/components',
         }),
         typescript: Flags.boolean({
             description: 'Create a TypeScript component',
@@ -29,7 +28,6 @@ export default class Component extends Command {
         style: Flags.enum({
             description: 'Choose which type of styling to use for your components',
             options: ['css', 'scss', 'styled-components', 'none'],
-            default: 'css',
             required: false,
         }),
     }
@@ -37,19 +35,21 @@ export default class Component extends Command {
     private async createComponent(name: string, flags: Record<string, any>) {
         const config = await readRsxConfig()
         const options: RsxConfig = {
-            dest: flags.dest ?? config.dest,
+            ...config,
+            dest: flags.dest ?? config.dest ?? 'src/components',
             typescript: flags.typescript ?? config.typescript,
-            style: flags.style ?? config.style,
+            style: flags.style ?? config.style ?? Style.css,
         }
-        const {dest, typescript, style} = options
+        const { dest, typescript, style } = options
 
-        const compTemplate = new ComponentTemplate(name, {typescript, style, dest})
-        const ext = typescript ? 'tsx' : 'js'
+        const compTemplate = new ComponentTemplate(name, { typescript, style, dest })
+        const componentExt = typescript ? 'tsx' : 'js'
+        const normalExt = typescript ? 'ts' : 'js'
 
         try {
-            await fs.mkdir(`${dest}/${name}`, {recursive: true})
+            await fs.mkdir(`${dest}/${name}`, { recursive: true })
             await fs.writeFile(
-                `${dest}/${name}/${name}.${ext}`,
+                `${dest}/${name}/${name}.${componentExt}`,
                 compTemplate.getScriptTemplate(),
                 'utf-8',
             )
@@ -61,7 +61,24 @@ export default class Component extends Command {
                     'utf-8',
                 )
             }
-            this.log(c.greenBright(`✅ Created ${name} at ${dest}/${name}`))
+
+            if (config.extraOptions?.jest) {
+                await fs.writeFile(
+                    `${dest}/${name}/${name}.test.${normalExt}`,
+                    compTemplate.getTestTemplate(),
+                    'utf-8',
+                )
+            }
+            if (config.extraOptions?.includeIndex) {
+                // CREATE index.ts
+                // await fs.writeFile(
+                //     `${dest}/${name}/index.${normalExt}`,
+                //     compTemplate.getIndexTemplate(),
+                //     'utf-8',
+                // )
+            }
+
+            this.log(c.greenBright(`Created ${name} at ${dest}/${name}`))
         } catch (error: any) {
             console.log(c.bold.red(`Failed to create ${name}`))
             console.log(error.message)
@@ -69,7 +86,7 @@ export default class Component extends Command {
     }
 
     public async run(): Promise<void> {
-        const {flags, argv} = await this.parse(Component)
+        const { flags, argv } = await this.parse(Component)
 
         if (this.argv.length === 0) {
             this.log(c.bold.red('Missing Argument: <ComponentName>'))
@@ -78,7 +95,9 @@ export default class Component extends Command {
 
         for await (const arg of argv) {
             if (!isVarName(arg)) {
-                this.log(c.bold.red(`Invalid Argument: ${arg} must be a valid variable name`))
+                this.log(
+                    c.bold.red(`Invalid Argument: ${arg} must be a valid variable name`),
+                )
                 continue
             }
 

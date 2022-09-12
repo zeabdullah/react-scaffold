@@ -1,11 +1,12 @@
-import {expect} from '@oclif/test'
+import { expect } from '@oclif/test'
 import ComponentTemplate from '../../src/templates/ComponentTemplate'
-import {Style} from '../../src/utils/config'
+import { Style } from '../../src/utils/config'
 
 describe('ComponentTemplate Class', () => {
     it('should return a CSS+JavaScript template by default', () => {
         const tp = new ComponentTemplate('Example')
-        const expectedJsTemplate = `import React from 'react';
+        const expectedJsTemplate = `
+import React from 'react';
 import styles from './Example.module.css';
 
 function Example() {
@@ -13,12 +14,12 @@ function Example() {
 }
 
 export default Example;
-`
+`.trimStart()
         expect(tp.getScriptTemplate()).to.eql(expectedJsTemplate)
     })
 
     it('should return a template including a SCSS import when set in the config', () => {
-        const tp = new ComponentTemplate('Example', {style: Style.scss})
+        const tp = new ComponentTemplate('Example', { style: Style.scss })
         expect(tp.getScriptTemplate()).to.contain(
             "import styles from './Example.module.scss';",
         )
@@ -27,9 +28,28 @@ export default Example;
         )
     })
 
+    it('should return a template including a unit test when set in the config', () => {
+        const tp = new ComponentTemplate('Example', { extraOptions: { jest: true } })
+
+        const expectedTemplate = `
+import React from 'react';
+
+describe('Example', () => {
+  it('case', () => {
+
+  });
+});
+`.trimStart()
+        expect(tp.getTestTemplate()).to.eql(
+            expectedTemplate,
+            'Actual and expected test template are not equal.',
+        )
+    })
+
     it('should return a TypeScript template when set in the config', () => {
-        const tp = new ComponentTemplate('Example', {typescript: true})
-        const expectedTsTemplate = `import React from 'react';
+        const tp = new ComponentTemplate('Example', { typescript: true })
+        const expectedTsTemplate = `
+import React from 'react';
 import styles from './Example.module.css';
 
 interface ExampleProps {}
@@ -39,14 +59,15 @@ function Example(props: ExampleProps): JSX.Element {
 }
 
 export default Example;
-`
+`.trimStart()
 
         expect(tp.getScriptTemplate()).to.eql(expectedTsTemplate)
     })
 
     it('should automatically modify the template if config is changed after creation', () => {
         const tp = new ComponentTemplate('Example')
-        const expectedFirstTemplate = `import React from 'react';
+        const expectedFirstTemplate = `
+import React from 'react';
 import styles from './Example.module.css';
 
 function Example() {
@@ -54,8 +75,10 @@ function Example() {
 }
 
 export default Example;
-`
-        const expectedSecondTemplate = `import React from 'react';
+`.trimStart()
+
+        const expectedSecondTemplate = `
+import React from 'react';
 import styles from './Example.module.scss';
 
 interface ExampleProps {}
@@ -65,7 +88,7 @@ function Example(props: ExampleProps): JSX.Element {
 }
 
 export default Example;
-`
+`.trimStart()
 
         expect(tp.getScriptTemplate()).to.eql(expectedFirstTemplate)
         expect(tp.getScriptTemplate()).to.contain(

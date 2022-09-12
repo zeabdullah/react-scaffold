@@ -1,13 +1,6 @@
 /* eslint-disable unicorn/prefer-spread */
-import {Style, type RsxConfig} from '../utils/config'
-import {
-    classNamePropString,
-    cssImportString,
-    cssTemplate,
-    jsTemplate,
-    styledComponentTemplate,
-    tsTemplate,
-} from './template-strings'
+import { Style, type RsxConfig } from '../utils/config'
+import * as tpStrings from './template-strings'
 
 type TemplateConfig = Partial<RsxConfig>
 
@@ -34,27 +27,26 @@ export default class ComponentTemplate {
         return this
     }
 
-    public getComponentName(): string {
-        return this.componentName
-    }
-
     public getStyleType(): Style {
         return this.config.style ?? Style.css
     }
 
     public getCssTemplate(): string {
-        return cssTemplate.slice().replace(/#COMPONENT_NAME#/g, this.componentName)
+        return tpStrings.cssTemplate.replace(/#COMPONENT_NAME#/g, this.componentName)
     }
 
     public getScriptTemplate(): string {
-        const {typescript} = this.config
+        const { typescript } = this.config
         const styleType = this.getStyleType()
 
         if (styleType === Style.styledComponents) {
-            return styledComponentTemplate.replace(/#COMPONENT_NAME#/g, this.componentName)
+            return tpStrings.styledComponentTemplate.replace(
+                /#COMPONENT_NAME#/g,
+                this.componentName,
+            )
         }
 
-        const template = typescript ? tsTemplate : jsTemplate
+        const template = typescript ? tpStrings.tsTemplate : tpStrings.jsTemplate
         if (styleType === Style.none) {
             return template
                 .replace(/#CSS_IMPORT#/g, '')
@@ -63,9 +55,17 @@ export default class ComponentTemplate {
         }
 
         return template
-            .replace(/#CSS_IMPORT#/g, cssImportString)
-            .replace(/#CLASS_NAME#/g, classNamePropString)
+            .replace(/#CSS_IMPORT#/g, tpStrings.cssImportString)
+            .replace(/#CLASS_NAME#/g, tpStrings.classNamePropString)
             .replace(/#COMPONENT_NAME#/g, this.componentName)
             .replace(/#CSS_EXT#/g, styleType)
     }
+
+    public getTestTemplate(): string {
+        return tpStrings.jestTemplate.replace(/#COMPONENT_NAME#/g, this.componentName)
+    }
+    // * TODO: storybook template
+    // public getStorybookTemplate(): string {
+    //     return storybookTemplate.replace(/#COMPONENT_NAME#/g, this.componentName)
+    // }
 }

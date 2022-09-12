@@ -36,6 +36,10 @@ const #COMPONENT_NAME# = styled.div\`
 export default #COMPONENT_NAME#;
 `.trimStart()
 
+export const indexTemplate = `
+export { #NAME# } from './#COMPONENT_FILE_PREFIX#'
+`.trimStart()
+
 export const jestTemplate = `
 import React from 'react';
 
@@ -44,4 +48,21 @@ describe('#COMPONENT_NAME#', () => {
 
   });
 });
+`.trimStart()
+
+export const storybookTemplate = `
+import React from 'react';
+import { #COMPONENT_NAME# } from './#COMPONENT_NAME#';
+
+export default { title: '#STORY_PATH#' };
+
+const defaultProps: React.ComponentProps<typeof #COMPONENT_NAME#> = {
+
+};
+
+export const Overview = () => {
+    return (
+        <#COMPONENT_NAME# {...defaultProps} />
+    );
+};
 `.trimStart()

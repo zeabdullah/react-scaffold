@@ -39,7 +39,7 @@ describe('rsx component', () => {
 
     test.stdout()
         .command(['component', '3componentName'])
-        .it('should expect <ComponentName> argument to be a valid variable name', ctx => {
+        .it('should expect <ComponentName> to be a valid variable name', ctx => {
             expect(ctx.stdout).to.contain('Invalid Argument')
             expect(ctx.stdout).to.not.contain('Created componentName')
         })
@@ -47,7 +47,7 @@ describe('rsx component', () => {
     test.stdout()
         .command(['component', 'MyComponent'])
         .it(
-            'should create a component named MyComponent in src/components by default',
+            "given '<ComponentName>', should create it in 'src/components' by default",
             async ctx => {
                 const componentPath = 'src/components/MyComponent'
 
@@ -74,7 +74,7 @@ describe('rsx component', () => {
     test.stdout()
         .command(['component', 'TestComponent', `--dest=${TEST_DIR}/components`])
         .it(
-            'should create a component named TestComponent in a given directory',
+            'should be able to create a component in a chosen directory',
             async _ctx => {
                 expect(fs.pathExistsSync(`${COMP_PATH}/TestComponent.js`)).to.be.true
                 expect(fs.pathExistsSync(`${COMP_PATH}/TestComponent.module.css`)).to.be
@@ -90,10 +90,13 @@ describe('rsx component', () => {
             '--typescript',
         ])
         .it(
-            'should create a typescript component when the `--typescript` flag is set',
+            'should create a typescript component if the `--typescript` flag is set',
             async _ctx => {
                 expect(fs.pathExistsSync(`${COMP_PATH}/TestComponent.tsx`)).to.be.true
-                expect(fs.pathExistsSync(`${COMP_PATH}/TestComponent.js`), 'TestComponent.js exists...?').to.be.false
+                expect(
+                    fs.pathExistsSync(`${COMP_PATH}/TestComponent.js`),
+                    'TestComponent.js exists...?',
+                ).to.be.false
             },
         )
 
@@ -149,10 +152,14 @@ describe('rsx component', () => {
                 'should create a styled component when `--style=styled-components`',
                 async _ctx => {
                     expect(fs.pathExistsSync(`${COMP_PATH}/TestComponent.js`)).to.be.true
-                    expect(fs.pathExistsSync(`${COMP_PATH}/TestComponent.module.scss`), 'TestComponent.module.scss exists...?').to
-                        .be.false
-                    expect(fs.pathExistsSync(`${COMP_PATH}/TestComponent.module.css`), 'TestComponent.module.css exists...?').to
-                        .be.false
+                    expect(
+                        fs.pathExistsSync(`${COMP_PATH}/TestComponent.module.scss`),
+                        'TestComponent.module.scss exists...?',
+                    ).to.be.false
+                    expect(
+                        fs.pathExistsSync(`${COMP_PATH}/TestComponent.module.css`),
+                        'TestComponent.module.css exists...?',
+                    ).to.be.false
                     const targetJsFileContent = fs.readFileSync(
                         `${TEST_DIR}/components/TestComponent/TestComponent.js`,
                         'utf-8',
