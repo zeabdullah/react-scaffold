@@ -70,12 +70,11 @@ export default class Component extends Command {
                 )
             }
             if (config.extraOptions?.includeIndex) {
-                // CREATE index.ts
-                // await fs.writeFile(
-                //     `${dest}/${name}/index.${normalExt}`,
-                //     compTemplate.getIndexTemplate(),
-                //     'utf-8',
-                // )
+                await fs.writeFile(
+                    `${dest}/${name}/index.${normalExt}`,
+                    compTemplate.getIndexTemplate(),
+                    'utf-8',
+                )
             }
 
             this.log(c.greenBright(`Created ${name} at ${dest}/${name}`))

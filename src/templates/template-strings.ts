@@ -36,9 +36,8 @@ const #COMPONENT_NAME# = styled.div\`
 export default #COMPONENT_NAME#;
 `.trimStart()
 
-export const indexTemplate = `
-export { #NAME# } from './#COMPONENT_FILE_PREFIX#'
-`.trimStart()
+export const indexTemplate = `export { default } from './#COMPONENT_NAME#'
+`
 
 export const jestTemplate = `
 import React from 'react';

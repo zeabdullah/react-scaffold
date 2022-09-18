@@ -29,7 +29,7 @@ export default Example;
     })
 
     it('should return a template including a unit test when set in the config', () => {
-        const tp = new ComponentTemplate('Example', { extraOptions: { jest: true } })
+        const tp = new ComponentTemplate('Example')
 
         const expectedTemplate = `
 import React from 'react';
@@ -40,10 +40,15 @@ describe('Example', () => {
   });
 });
 `.trimStart()
-        expect(tp.getTestTemplate()).to.eql(
-            expectedTemplate,
-            'Actual and expected test template are not equal.',
-        )
+
+        expect(tp.getTestTemplate()).to.eql(expectedTemplate)
+    })
+
+    it('should return a template including an index when set in the config', () => {
+        const tp = new ComponentTemplate('Example')
+        const expectedTemplate = "export { default } from './Example'\n"
+
+        expect(tp.getIndexTemplate()).to.eql(expectedTemplate)
     })
 
     it('should return a TypeScript template when set in the config', () => {
