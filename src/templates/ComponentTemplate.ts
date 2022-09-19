@@ -1,4 +1,3 @@
-/* eslint-disable unicorn/prefer-spread */
 import { Style, type RsxConfig } from '../utils/config'
 import * as tpStrings from './template-strings'
 
@@ -62,13 +61,13 @@ export default class ComponentTemplate {
     }
 
     public getTestTemplate(): string {
-        return tpStrings.jestTemplate.replace(/#COMPONENT_NAME#/g, this.componentName)
+        return tpStrings.testTemplate.replace(/#COMPONENT_NAME#/g, this.componentName)
     }
 
     public getIndexTemplate(): string {
         return tpStrings.indexTemplate.replace(/#COMPONENT_NAME#/g, this.componentName)
     }
-    // * TODO: storybook template
+    // TODO: storybook template
     // public getStorybookTemplate(): string {
     //     return storybookTemplate.replace(/#COMPONENT_NAME#/g, this.componentName)
     // }

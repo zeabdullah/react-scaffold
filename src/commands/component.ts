@@ -56,13 +56,13 @@ export default class Component extends Command {
 
             if (style === Style.css || style === Style.scss) await createCssModule(style)
 
-            if (rsxConfig.extraOptions?.jest) await createUnitTestFile()
+            if (rsxConfig.extraOptions?.test) await createUnitTestFile()
             if (rsxConfig.extraOptions?.includeIndex) await createIndexFile()
             // TODO: if (config.extraOptions?.storybook) {
             //     create a storybook file...
             // }
 
-            this.log(c.greenBright(`Created ${name} at ${dest}/${name}`))
+            this.log(c.greenBright(`✔️ Created '${name}' at '${dest}/${name}'`))
         } catch (error: any) {
             this.log(c.bold.red(`Failed to create ${name}`))
             this.log(error.message)

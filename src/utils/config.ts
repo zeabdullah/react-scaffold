@@ -13,7 +13,7 @@ export interface RsxConfig {
     typescript?: boolean
     style: Style
     extraOptions?: {
-        jest?: boolean
+        test?: boolean
         includeIndex?: boolean
         storybook?: boolean
     }

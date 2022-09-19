@@ -90,9 +90,14 @@ export default class Init extends Command {
                     )} to continue)`,
                 ),
                 choices: [
-                    { name: 'jest', message: 'Unit tests (Jest)', value: true },
+                    { name: 'test', message: 'Unit tests (e.g. Jest)', value: true },
                     { name: 'includeIndex', message: 'include `index.js`', value: true },
-                    { name: 'storybook', message: 'Storybook', value: true },
+                    {
+                        name: 'storybook',
+                        message: 'Storybook',
+                        value: true,
+                        disabled: '(disabled, work in progress...)',
+                    },
                 ],
                 result(choices: any[]) {
                     const extraOptions: Record<string, boolean> = {}

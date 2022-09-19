@@ -39,7 +39,7 @@ export default #COMPONENT_NAME#;
 export const indexTemplate = `export { default } from './#COMPONENT_NAME#'
 `
 
-export const jestTemplate = `
+export const testTemplate = `
 import React from 'react';
 
 describe('#COMPONENT_NAME#', () => {
