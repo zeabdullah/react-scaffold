@@ -1,4 +1,4 @@
-import {type PathLike} from 'fs-extra'
+import { type PathLike } from 'fs-extra'
 import readdirp from 'readdirp'
 
 /*!
@@ -37,7 +37,7 @@ export async function getSubdirectories(
         })
         return dirs.map(dir => dir.path.replace(/\\/g, '/'))
     } catch (error) {
-        console.log(error)
+        console.warn(error)
         return []
     }
 }

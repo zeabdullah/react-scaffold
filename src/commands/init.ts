@@ -1,10 +1,10 @@
-import {Command, Flags} from '@oclif/core'
-import {prompt} from 'enquirer'
-import {resolve} from 'node:path'
+import { Command, Flags } from '@oclif/core'
+import { prompt } from 'enquirer'
+import { resolve } from 'node:path'
 import c from 'ansi-colors'
 import fs from 'fs-extra'
-import {getSubdirectories} from '../helpers'
-import {RsxConfig, Style} from '../utils/config'
+import { getSubdirectories } from '../helpers'
+import { RsxConfig, Style } from '../utils/config'
 
 const DEFAULT_CONFIG: RsxConfig = {
     dest: 'src/components',
@@ -27,20 +27,20 @@ export default class Init extends Command {
     }
 
     public async _promptOverwriteConfig(): Promise<boolean> {
-        const {overwrite}: Record<string, any> = await prompt({
+        const { overwrite }: Record<string, any> = await prompt({
             name: 'overwrite',
             type: 'confirm',
             message: c.bold.yellow('config file already exists! Overwrite?'),
         })
         if (!overwrite) {
-            console.log('🚫 canceled')
+            this.log(c.yellow('🚫 canceled'))
             return false
         }
         return true
     }
 
     public async run(): Promise<void> {
-        const {flags} = await this.parse(Init)
+        const { flags } = await this.parse(Init)
         if (flags.yes) {
             this._generateRsxConfig(DEFAULT_CONFIG)
             return
@@ -75,10 +75,10 @@ export default class Init extends Command {
                 type: 'select',
                 message: 'How would you like to style your components?',
                 choices: [
-                    {message: 'CSS', name: 'css'},
-                    {message: 'SCSS', name: 'scss'},
-                    {message: 'Styled Components 💅', name: 'styled-components'},
-                    {message: 'None (e.g. for Tailwind)', name: 'none'},
+                    { message: 'CSS', name: 'css' },
+                    { message: 'SCSS', name: 'scss' },
+                    { message: 'Styled Components 💅', name: 'styled-components' },
+                    { message: 'None (e.g. for Tailwind)', name: 'none' },
                 ],
             },
             {
@@ -90,9 +90,9 @@ export default class Init extends Command {
                     )} to continue)`,
                 ),
                 choices: [
-                    {name: 'jest', message: 'Unit tests (Jest)', value: true},
-                    {name: 'includeIndex', message: 'include `index.js`', value: true},
-                    {name: 'storybook', message: 'Storybook', value: true},
+                    { name: 'jest', message: 'Unit tests (Jest)', value: true },
+                    { name: 'includeIndex', message: 'include `index.js`', value: true },
+                    { name: 'storybook', message: 'Storybook', value: true },
                 ],
                 result(choices: any[]) {
                     const extraOptions: Record<string, boolean> = {}
@@ -117,10 +117,10 @@ export default class Init extends Command {
                 CONFIG_PATH_AT_ROOT,
                 JSON.stringify(configChoices, null, '\t'),
             )
-            console.log(c.greenBright('✅ Config (.rsxrc) generated successfully'))
+            this.log(c.greenBright('✅ Config (.rsxrc) generated successfully'))
         } catch (error: any) {
-            console.log(c.bold.red('Failed to create .rsxrc'))
-            console.log(error.message)
+            this.log(c.bold.red('Failed to create .rsxrc'))
+            console.warn(error.message)
         }
     }
 }

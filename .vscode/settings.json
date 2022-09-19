@@ -5,4 +5,9 @@
     "prettier.semi": false,
     "prettier.printWidth": 90,
     "prettier.singleQuote": true,
+    "editor.rulers": [
+        {
+            "column": 90
+        }
+    ]
 }

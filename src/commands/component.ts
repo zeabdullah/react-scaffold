@@ -33,12 +33,12 @@ export default class Component extends Command {
     }
 
     private async createComponent(name: string, flags: Record<string, any>) {
-        const config = await readRsxConfig()
+        const rsxConfig = await readRsxConfig()
         const options: RsxConfig = {
-            ...config,
-            dest: flags.dest ?? config.dest ?? 'src/components',
-            typescript: flags.typescript ?? config.typescript,
-            style: flags.style ?? config.style ?? Style.css,
+            ...rsxConfig,
+            dest: flags.dest ?? rsxConfig.dest ?? 'src/components',
+            typescript: flags.typescript ?? rsxConfig.typescript,
+            style: flags.style ?? rsxConfig.style ?? Style.css,
         }
         const { dest, typescript, style } = options
 
@@ -53,34 +53,43 @@ export default class Component extends Command {
                 compTemplate.getScriptTemplate(),
                 'utf-8',
             )
-            if (style === Style.css || style === Style.scss) {
-                const cssExt = compTemplate.getStyleType() as Style.css | Style.scss
-                await fs.writeFile(
-                    `${dest}/${name}/${name}.module.${cssExt}`,
-                    compTemplate.getCssTemplate(),
-                    'utf-8',
-                )
-            }
 
-            if (config.extraOptions?.jest) {
-                await fs.writeFile(
-                    `${dest}/${name}/${name}.test.${normalExt}`,
-                    compTemplate.getTestTemplate(),
-                    'utf-8',
-                )
-            }
-            if (config.extraOptions?.includeIndex) {
-                await fs.writeFile(
-                    `${dest}/${name}/index.${normalExt}`,
-                    compTemplate.getIndexTemplate(),
-                    'utf-8',
-                )
-            }
+            if (style === Style.css || style === Style.scss) await createCssModule(style)
+
+            if (rsxConfig.extraOptions?.jest) await createUnitTestFile()
+            if (rsxConfig.extraOptions?.includeIndex) await createIndexFile()
+            // TODO: if (config.extraOptions?.storybook) {
+            //     create a storybook file...
+            // }
 
             this.log(c.greenBright(`Created ${name} at ${dest}/${name}`))
         } catch (error: any) {
-            console.log(c.bold.red(`Failed to create ${name}`))
-            console.log(error.message)
+            this.log(c.bold.red(`Failed to create ${name}`))
+            this.log(error.message)
+        }
+
+        async function createCssModule(cssExt: Style.css | Style.scss) {
+            await fs.writeFile(
+                `${dest}/${name}/${name}.module.${cssExt}`,
+                compTemplate.getCssTemplate(),
+                'utf-8',
+            )
+        }
+
+        async function createIndexFile() {
+            await fs.writeFile(
+                `${dest}/${name}/index.${normalExt}`,
+                compTemplate.getIndexTemplate(),
+                'utf-8',
+            )
+        }
+
+        async function createUnitTestFile() {
+            await fs.writeFile(
+                `${dest}/${name}/${name}.test.${normalExt}`,
+                compTemplate.getTestTemplate(),
+                'utf-8',
+            )
         }
     }
 

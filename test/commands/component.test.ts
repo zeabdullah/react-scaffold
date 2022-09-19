@@ -98,6 +98,24 @@ describe('rsx component', () => {
 
     describe('--style flag', () => {
         test.stdout()
+            .command(['component', 'TestComponent', `--dest=${TEST_DIR}/components`])
+            .it(
+                'should create a css stylesheet when `--style` is not specified',
+                async _ctx => {
+                    expect(fs.pathExistsSync(`${COMP_PATH}/TestComponent.js`)).to.be.true
+                    expect(fs.pathExistsSync(`${COMP_PATH}/TestComponent.module.css`)).to
+                        .be.true
+                    const targetJsFileContent = fs.readFileSync(
+                        `${TEST_DIR}/components/TestComponent/TestComponent.js`,
+                        'utf-8',
+                    )
+                    expect(targetJsFileContent).to.contain(
+                        "import styles from './TestComponent.module.css'",
+                    )
+                },
+            )
+
+        test.stdout()
             .command([
                 'component',
                 'TestComponent',
