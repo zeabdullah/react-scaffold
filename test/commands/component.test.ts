@@ -62,7 +62,7 @@ describe('rsx component', () => {
                 const tp = new ComponentTemplate('MyComponent')
 
                 expect(ctx.stdout).to.contain(
-                    'Created MyComponent at src/components/MyComponent',
+                    "Created 'MyComponent' at 'src/components/MyComponent'",
                 )
                 expect(jsFileContent).to.eql(tp.getScriptTemplate())
                 expect(cssFileContent).to.eql(tp.getCssTemplate())
