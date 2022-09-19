@@ -1,24 +1,24 @@
-import mock from 'mock-fs'
-import {expect, test} from '@oclif/test'
+import mock, { load } from 'mock-fs'
+import { expect, test } from '@oclif/test'
 import fs from 'fs-extra'
-import {resolve} from 'node:path'
+import { resolve } from 'node:path'
 import ComponentTemplate from '../../src/templates/ComponentTemplate'
 
 // ? Deletes the following test folders, if present
 function purgeTestFolders() {
-    fs.rm('tmp', {recursive: true, force: true}).catch()
-    fs.rm('src/components', {recursive: true, force: true}).catch()
+    fs.rm('tmp', { recursive: true, force: true }).catch()
+    fs.rm('src/components', { recursive: true, force: true }).catch()
 }
 
 function mockFolders() {
     mock(
         {
-            'package.json': mock.load(resolve(__dirname, '../../package.json')),
-            'tsconfig.json': mock.load(resolve(__dirname, '../../tsconfig.json')),
-            node_modules: mock.load(resolve(__dirname, '../../node_modules')),
-            src: mock.load(resolve(__dirname, '../../src')),
+            'package.json': load(resolve(__dirname, '../../package.json')),
+            'tsconfig.json': load(resolve(__dirname, '../../tsconfig.json')),
+            node_modules: load(resolve(__dirname, '../../node_modules')),
+            src: load(resolve(__dirname, '../../src')),
         },
-        {createCwd: false},
+        { createCwd: false },
     )
 }
 
@@ -73,14 +73,10 @@ describe('rsx component', () => {
 
     test.stdout()
         .command(['component', 'TestComponent', `--dest=${TEST_DIR}/components`])
-        .it(
-            'should be able to create a component in a chosen directory',
-            async _ctx => {
-                expect(fs.pathExistsSync(`${COMP_PATH}/TestComponent.js`)).to.be.true
-                expect(fs.pathExistsSync(`${COMP_PATH}/TestComponent.module.css`)).to.be
-                    .true
-            },
-        )
+        .it('should be able to create a component in a chosen directory', async _ctx => {
+            expect(fs.pathExistsSync(`${COMP_PATH}/TestComponent.js`)).to.be.true
+            expect(fs.pathExistsSync(`${COMP_PATH}/TestComponent.module.css`)).to.be.true
+        })
 
     test.stdout()
         .command([

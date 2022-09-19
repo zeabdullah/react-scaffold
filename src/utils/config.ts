@@ -1,5 +1,5 @@
-import {readFile} from 'fs-extra'
-import {resolve} from 'node:path'
+import { readFile } from 'fs-extra'
+import { resolve } from 'node:path'
 
 export enum Style {
     css = 'css',
@@ -19,7 +19,7 @@ export interface RsxConfig {
     }
 }
 
-type EmptyObject = Record<string, never>
+type EmptyObject = Record<string, never> // TypeScript linter recommends this
 export async function readRsxConfig(): Promise<RsxConfig | EmptyObject> {
     try {
         const configData = await readFile(resolve(process.cwd(), '.rsxrc'), 'utf-8')
