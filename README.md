@@ -24,7 +24,7 @@ $ npm install -g react-scaffoldx
 $ rsx COMMAND
 running command...
 $ rsx (--version)
-react-scaffoldx/0.3.0 win32-x64 node-v16.13.1
+react-scaffoldx/0.4.0 win32-x64 node-v16.13.1
 $ rsx --help [COMMAND]
 USAGE
   $ rsx COMMAND
