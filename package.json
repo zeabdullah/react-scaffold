@@ -1,6 +1,6 @@
 {
   "name": "react-scaffoldx",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Scaffold your React app from the command line.",
   "author": "Abdullah Zeidan @AbdullahZeidan",
   "bin": {
@@ -61,8 +61,7 @@
     "posttest": "pnpm run lint",
     "prepack": "pnpm build && oclif manifest && oclif readme",
     "test": "mocha --forbid-only \"test/**/*.test.ts\"",
-    "watch": "mocha -w --forbid-only \"test/**/*.test.ts\"",
-    "version": "oclif readme && git add README.md"
+    "watch": "mocha -w --forbid-only \"test/**/*.test.ts\""
   },
   "engines": {
     "node": ">=12.0.0"

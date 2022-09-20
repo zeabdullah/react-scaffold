@@ -26,7 +26,7 @@ export default class Init extends Command {
         }),
     }
 
-    public async _promptOverwriteConfig(): Promise<boolean> {
+    public async _overwriteConfig(): Promise<boolean> {
         const { overwrite }: Record<string, any> = await prompt({
             name: 'overwrite',
             type: 'confirm',
@@ -46,8 +46,7 @@ export default class Init extends Command {
             return
         }
 
-        const allowOverwrite = await this._promptOverwriteConfig()
-        if (configExistsAtRoot() && !allowOverwrite) return
+        if (configExistsAtRoot() && !(await this._overwriteConfig())) return
 
         const pathChoices = await getSubdirectories(process.cwd())
         const configQuestions = [
