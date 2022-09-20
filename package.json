@@ -59,7 +59,7 @@
     "lint": "eslint . --ext .ts --config .eslintrc",
     "postpack": "shx rm -f oclif.manifest.json",
     "posttest": "pnpm run lint",
-    "prepack": "pnpm build && oclif manifest && oclif readme",
+    "prepack": "pnpm build && oclif manifest",
     "test": "mocha --forbid-only \"test/**/*.test.ts\"",
     "watch": "mocha -w --forbid-only \"test/**/*.test.ts\""
   },
