@@ -46,7 +46,8 @@ USAGE
 
 FLAGS
   -d, --dest=<value>                         Destination folder
-  --style=(css|scss|styled-components|none)  Choose which type of styling to use for your components  --typescript                               Create a TypeScript component
+  --style=(css|scss|styled-components|none)  Choose which type of styling to use for your components
+  --typescript                               Create a TypeScript component
 
 DESCRIPTION
   Create/Scaffold a React component
