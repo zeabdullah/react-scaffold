@@ -20,6 +20,10 @@ export function isVarName(str: string): boolean {
     return true
 }
 
+export function isHookName(str: string): boolean {
+    return isVarName(str) && str.startsWith('use')
+}
+
 type GetSubDirectoriesOptions = {
     directoryFilter?: string | string[]
 }
