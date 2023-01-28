@@ -70,5 +70,10 @@
   "keywords": [
     "oclif"
   ],
-  "types": "dist/index.d.ts"
+  "types": "dist/index.d.ts",
+  "pnpm": {
+    "overrides": {
+      "minimatch@<3.0.5": ">=3.0.5"
+    }
+  }
 }

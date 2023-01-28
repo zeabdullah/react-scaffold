@@ -1,0 +1,22 @@
+*-debug.log
+*-error.log
+/.nyc_output
+/dist
+/lib
+/package-lock.json
+/tmp
+node_modules
+oclif.manifest.json
+
+# MacOS 
+.DS_Store
+
+# Used in some unit tests
+src/components/
+mock/
+.rsxrc
+
+# IDEs
+.idea/*
+.vscode/*
+!.vscode/settings.json
