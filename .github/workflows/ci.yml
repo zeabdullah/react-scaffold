@@ -10,7 +10,7 @@ jobs:
   build:
     strategy:
       matrix:
-        node-version: [14.x, 16.x]
+        node-version: [14.x, 16.x, 18.x]
         # These are the versions supported by pnpm v7.0.0
         os: [windows-latest, ubuntu-latest, macos-latest]
 
