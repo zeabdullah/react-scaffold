@@ -8,6 +8,9 @@
 node_modules
 oclif.manifest.json
 
+# MacOS 
+.DS_Store
+
 # Used in some unit tests
 src/components/
 mock/
