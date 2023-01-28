@@ -6,11 +6,7 @@ import readdirp from 'readdirp'
  * https://github.com/shinnn/is-var-name
  */
 export function isVarName(str: string): boolean {
-    if (typeof str !== 'string') {
-        return false
-    }
-
-    if (str.trim() !== str) {
+    if (typeof str !== 'string' || str.trim() !== str) {
         return false
     }
 
@@ -24,11 +20,13 @@ export function isVarName(str: string): boolean {
     return true
 }
 
+type GetSubDirectoriesOptions = {
+    directoryFilter?: string | string[]
+}
+
 export async function getSubdirectories(
     dirPath: PathLike,
-    options?: {
-        directoryFilter?: string | string[]
-    },
+    options?: GetSubDirectoriesOptions,
 ): Promise<string[]> {
     try {
         const dirs = await readdirp.promise(dirPath.toString(), {
