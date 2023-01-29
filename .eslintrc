@@ -7,6 +7,7 @@
     "object-curly-spacing": "off",
     "unicorn/prefer-module": "off",
     "unicorn/filename-case": "off",
+    "quote-props": "off",
     "camelcase": "off",
     "eol-last": "warn",
     "padding-line-between-statements": "off",
